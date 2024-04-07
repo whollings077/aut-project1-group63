@@ -11,13 +11,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+/**
+*
+* @author Matthew Warn
+*/
 
 public class API {
 	
 	private String difficulty;
 	
 	public static List<Question> fetchQuestions(String difficulty){
-		List<Question> questions = new ArrayList<>();
+		List<Question> parsedQuestions = new ArrayList<>();
+		String response = "";
 		
 		try {
 			//Taking the user's chosen difficulty and getting the API URL for that difficulty
@@ -32,7 +42,6 @@ public class API {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			
 			//Adding the data from the API to a string line by line
-			String response = "";
 			String line;
 			
 			while ((line = reader.readLine()) != null) {
@@ -40,10 +49,6 @@ public class API {
 			}
 			
 			reader.close();
-
-			//TEST - Just used this to show that the code works :)
-			System.out.println(response);
-			
 			
 		} 
 		catch (MalformedURLException e) {
@@ -54,7 +59,40 @@ public class API {
 			e.printStackTrace();
 		}
 		
-		return null;
+
+		//Parsing the response from the API
+		try {
+			//Turning the string into a JSONArray
+			JSONParser parser = new JSONParser();
+			JSONObject responseObject = (JSONObject) parser.parse(response);
+	        JSONArray parsedArray = (JSONArray) responseObject.get("results");
+	
+	        //Looping through the array and turning each item into a java object
+	        for (Object obj : parsedArray) {
+	            JSONObject result = (JSONObject) obj;
+	            
+	            //Retrieving all of the info needed for each question
+	            String type = (String) result.get("type");
+	            String category = (String) result.get("category");
+	            String question = (String) result.get("question");
+	            String correct_answer = (String) result.get("correct_answer");
+	            JSONArray incorrect_answersJsonArray = (JSONArray) result.get("incorrect_answers");
+	            List<String> incorrect_answers = new ArrayList<>();
+	
+	            //Turning the JSONArray of incorrect answers into a regular ArrayList
+	            for (Object answer : incorrect_answersJsonArray) {
+	                incorrect_answers.add((String) answer);
+	            }
+	
+	            //Creating a Question object with all the data that was just retrieved from the API
+	            Question q = new Question(type, difficulty, category, question, correct_answer, incorrect_answers);
+	            parsedQuestions.add(q);
+	        }
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	    } 
+		
+		//Returning the final list with all of the questions as Question objects.
+		return parsedQuestions;
 	}
 }
-

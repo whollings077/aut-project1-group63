@@ -57,19 +57,19 @@ public class Question {
         this.question = question;
     }
 
-    public String getCorrect_answer() {
+    public String getCorrect_Answer() {
         return correct_answer;
     }
 
-    public void setCorrect_answer(String correct_answer) {
+    public void setCorrect_Answer(String correct_answer) {
         this.correct_answer = correct_answer;
     }
 
-    public List<String> getIncorrect_answers() {
+    public List<String> getIncorrect_Answers() {
         return incorrect_answers;
     }
 
-    public void setIncorrect_answers(List<String> incorrect_answers) {
+    public void setIncorrect_Answers(List<String> incorrect_answers) {
         this.incorrect_answers = incorrect_answers;
     }
 }
