@@ -39,7 +39,7 @@ public class Main {
                     System.out.println("Incorrect. The correct answer is: " + question.getCorrect_Answer());
                 }
             }
-            // closes the scanner after the cli
+            scanner.close(); // closes the scanner after the cli(maybe not needed)
         }
     }
 }
