@@ -15,11 +15,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
 *
 * @author Matthew Warn
 */
+
+//TEST AGAIn
 
 public class API {
 	
@@ -74,14 +77,14 @@ public class API {
 	            //Retrieving all of the info needed for each question
 	            String type = (String) result.get("type");
 	            String category = (String) result.get("category");
-	            String question = (String) result.get("question");
-	            String correct_answer = (String) result.get("correct_answer");
+	            String question = StringEscapeUtils.unescapeHtml4((String) result.get("question")); //StringEscapeUtils fixes a bug where symbols would show up in HTML form
+                String correct_answer = StringEscapeUtils.unescapeHtml4((String) result.get("correct_answer")); 
 	            JSONArray incorrect_answersJsonArray = (JSONArray) result.get("incorrect_answers");
 	            List<String> incorrect_answers = new ArrayList<>();
 	
 	            //Turning the JSONArray of incorrect answers into a regular ArrayList
 	            for (Object answer : incorrect_answersJsonArray) {
-	                incorrect_answers.add((String) answer);
+	            	incorrect_answers.add(StringEscapeUtils.unescapeHtml4((String) answer)); 
 	            }
 	
 	            //Creating a Question object with all the data that was just retrieved from the API
