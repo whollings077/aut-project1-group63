@@ -44,4 +44,10 @@ public class Logger {
             pw = null; // close printwriter
         }
     }
+    public static void main(String[] args) {
+        Logger logtest = new Logger(); // Assuming the Logging class is already defined
+        logtest.open();
+        logtest.write("test");
+        
+    }
 }

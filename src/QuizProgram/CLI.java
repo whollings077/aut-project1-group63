@@ -75,24 +75,21 @@ public class CLI {
                         scanner.next();
                     }
                 }*/
-                while (true) { //attempted fix for above code
+                while (true) {//attempted fix
                     try {
-                        input = scanner.nextInt();
-                        switch (input) {
-                            case 1:
-                            case 2:
-                            case 3:
-                                break OUTER;
-                            case 0:
-                                exit();
-                            default:
-                                System.out.println("Please input a valid number.\n");
-                                clilog.write("User input invalid number\n");
-                                break;
+                        diffInput = scanner.nextInt();
+                        if (diffInput >= 1 && diffInput <= 3) {
+                            break; // break loop if valid difficulty is chosen
+                        } else if (diffInput == 0) {
+                            exit();
+                        } else {
+                            System.out.println("Please input a valid number.\n");
+                            clilog.write("User input invalid number for difficulty selection\n");
                         }
                     } catch (Exception e) {
                         System.out.println("Please input a valid number.\n");
-                        scanner.next(); // Clears the scanner buffer to avoid infinite loop
+                        scanner.next(); // clear the buffer
+                        clilog.write("Exception caught during difficulty selection. User input may not be a number.\n");
                     }
                 }
                 //Setting the user's chosen difficulty
@@ -111,7 +108,7 @@ public class CLI {
                     }
                 }
                  */
-                switch (diffInput) {//another attemped fix
+                switch (diffInput) { //another fix
                     case 1:
                         difficulty = "easy";
                         clilog.write("User selected easy difficulty\n");
@@ -125,7 +122,7 @@ public class CLI {
                         clilog.write("User selected hard difficulty\n");
                         break;
                     default:
-                        // Handle unexpected value of diffInput if necessary
+                        //should not be reachable due to the validation above
                         break;
                 }
 
