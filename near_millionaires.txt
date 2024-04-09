@@ -1,0 +1,2 @@
+10000 Bobby 1 Hard
+25000 Megan 2 Easy

@@ -44,10 +44,4 @@ public class Logger {
             pw = null; // close printwriter
         }
     }
-/* test    public static void main(String[] args) {
-        Logger logtest = new Logger();
-        logtest.open();
-        logtest.write("test");
-        
-    }*/
 }

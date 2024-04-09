@@ -13,4 +13,9 @@ public class Main {
         List<Question> questions = API.fetchQuestions(difficulty); 
         CLI.ask(questions);
     }
+    
+    public static void exit() {
+        System.out.println("\nExiting the game...\nThanks for playing!");
+        System.exit(0);
+    }
 }

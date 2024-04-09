@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
+    //Values to be stored for the leaderboard
+    public static String leaderboardDiff;
+    public static int lifelineCount = 0;
 
     public static String start() {
         String difficulty = new String();
@@ -29,10 +32,9 @@ public class CLI {
                     case 1:
                     case 2:
                     case 3:
-                        // Assuming there's an OUTER label for a loop that encloses this snippet
                         break OUTER;
                     case 0:
-                        exit();
+                        Main.exit();
                         break; // This break is technically not needed after exit() but included for consistency
                     default:
                         System.out.println("Please input a valid number.\n");
@@ -50,82 +52,59 @@ public class CLI {
                 System.out.println("You have two lifelines which can each help you out with a question if you're stuck.\n50:50 will get rid of two incorrect answers (Only works on questions with 4 answers)\nSkip will skip the current question.\n");
                 System.out.println("To answer questions, simply type in the number corresponding to your answer.\nTo activate your lifeline, input 5 or 6 instead of answering.\n");
                 System.out.println("Each question you answer will earn you more money and if you get all 10 correct, you win $1,000,000! Get one wrong and it's back to zero!");
-                System.out.println("At certain points, you will be able to cash out the money that you've earned so far and secure your place on the leaderboard.");
 
                 clilog.write("\nUser selected How to Play");
             case 2: //If user selects "Start Game"
                 System.out.println("\nPlease choose a difficulty.\n1. Easy\n2. Medium\n3. Hard");
 
                 OUTER:
-                /*                while (true) {
+                while (true) {
                     try {
                         diffInput = scanner.nextInt();
                         switch (diffInput) {
-                            case 1, 2, 3 -> {
+                            case 1:
+                            case 2:
+                            case 3:
                                 break OUTER;
-                            }
-                            case 0 ->
-                                exit();
-                            default ->
+                                
+                            case 0:
+                                Main.exit();
+                                
+                            default:
                                 System.out.println("Please input a valid number.\n");
                         }
                     } catch (Exception e) {
                         System.out.println("Please input a valid number.\n");
-                        clilog.write("User input invaid number\n");
+                        clilog.write("User input invalid number\n");
                         scanner.next();
                     }
-                }*/
-                while (true) {//attempted fix
-                    try {
-                        diffInput = scanner.nextInt();
-                        if (diffInput >= 1 && diffInput <= 3) {
-                            break; // break loop if valid difficulty is chosen
-                        } else if (diffInput == 0) {
-                            exit();
-                        } else {
-                            System.out.println("Please input a valid number.\n");
-                            clilog.write("User input invalid number for difficulty selection\n");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Please input a valid number.\n");
-                        scanner.next(); // clear the buffer
-                        clilog.write("Exception caught during difficulty selection. User input may not be a number.\n");
-                    }
                 }
-                //Setting the user's chosen difficulty
-/*                switch (diffInput) {
-                    case 1 -> {
-                        difficulty = "easy";
-                        clilog.write("User selected easy difficulty\n");
-                    }
-                    case 2 -> {
-                        difficulty = "medium";
-                        clilog.write("User selected medium difficulty\n");
-                    }
-                    case 3 -> {
-                        difficulty = "hard";
-                        clilog.write("User selected hard difficulty\n");
-                    }
-                }
-                 */
-                switch (diffInput) { //another fix
+                
+                switch (diffInput) {
                     case 1:
                         difficulty = "easy";
+                        leaderboardDiff = "Easy";
                         clilog.write("User selected easy difficulty\n");
                         break;
                     case 2:
                         difficulty = "medium";
+                        leaderboardDiff = "Medium";
                         clilog.write("User selected medium difficulty\n");
                         break;
                     case 3:
                         difficulty = "hard";
+                        leaderboardDiff = "Hard";
                         clilog.write("User selected hard difficulty\n");
                         break;
                     default:
                         //should not be reachable due to the validation above
                         break;
                 }
-
+                break;
+            
+            case 3: //If the user selects Leaderboard
+                Leaderboard.displayLeaderBoard();
+                break;
         }
         clilog.close(); // close logger
         return difficulty;
@@ -156,6 +135,10 @@ public class CLI {
         {
             for (Question question : questions) {
                 System.out.println("\n" + question.getQuestion());
+                
+                //DEBUG TOOL TO GET TO THE END! REMOVE BEFORE SUBMISSION
+                System.out.println(question.getCorrect_Answer());
+                
                 List<String> options = new ArrayList<>(question.getIncorrect_Answers());
                 options.add(question.getCorrect_Answer()); //Adds the correct answer to the list of  answer options for a question
                 Collections.shuffle(options); //This shuffles the collection of questions so that the correct one is in a random location
@@ -168,9 +151,9 @@ public class CLI {
                 if (fiftyFiftyUsed == false && skipUsed == false) {
                     System.out.println("\nYou have both lifelines available (5,6)");
                 } else if (fiftyFiftyUsed == false && skipUsed == true) {
-                    System.out.println("\nYou have your Skip lifeline available (6)");
-                } else if (fiftyFiftyUsed == true && skipUsed == false) {
                     System.out.println("\nYou have your 50:50 lifeline available (5)");
+                } else if (fiftyFiftyUsed == true && skipUsed == false) {
+                    System.out.println("\nYou have your Skip lifeline available (6)");
                 } else if (fiftyFiftyUsed == true && skipUsed == true) {
                     System.out.println("\nYou have no lifelines available");
                 }
@@ -183,7 +166,7 @@ public class CLI {
 
                         switch (userAnswerIndex) {
                             case -1: // Exits
-                                exit();
+                                Main.exit();
 
                             case 4: // Uses 50:50
                                 if (fiftyFiftyUsed == true) {
@@ -194,9 +177,10 @@ public class CLI {
                                     System.out.println("\nYou cannot use your 50:50 lifeline for this question.");
                                     continue;
                                 }
-
+                                
                                 Lifeline.fiftyFifty(options, question.getCorrect_Answer());
                                 fiftyFiftyUsed = true;
+                                lifelineCount++;
                                 System.out.println("\n" + question.getQuestion());
                                 for (int i = 0; i < options.size(); i++) {
                                     System.out.println((i + 1) + ". " + options.get(i)); // Display the updated options 
@@ -211,10 +195,9 @@ public class CLI {
 
                                 System.out.println("\nSkipping the current question...");
                                 skipUsed = true;
+                                lifelineCount++;
 
                                 // Changing variables as if the user got the answer correct
-                                currentQuestionNumber++;
-                                winnings = questionPrizes.get(currentQuestionNumber);
                                 userAnswerIndex = options.indexOf(question.getCorrect_Answer());
                                 break;
                         }
@@ -234,32 +217,23 @@ public class CLI {
                             System.out.println("\nIncorrect. The correct answer is: " + question.getCorrect_Answer());
                             System.out.println("You lose! Your final winnings were $" + winnings);
                             Thread.sleep(1500); // Pause for effect
-                            System.out.println("\nWould you like to try again?\n1. Yes\n2. No");
+                            System.out.println("\nWould you like to try again or add your score to the leaderboard?\n1. Try Again\n2. Leaderboard\n3. Exit Game");
 
                             OUTER:
                             while (true) {
                                 try {
                                     int loseInput = scanner.nextInt();
-                                    /*                                    switch (loseInput) {
-                                        case 1 -> {
-                                            System.out.println("");
-                                            Main.runGame(); // Restarts gane
-                                            return;
-                                        }
-                                        case 2 ->
-                                            exit(); // Quits game
-                                        default ->
-                                            System.out.println("Please input a valid number.");
-                                    }
-                                     */
                                     switch (loseInput) {
                                         case 1:
                                             System.out.println("");
                                             Main.runGame(); // Restarts game
                                             return;
-
+                                            
                                         case 2:
-                                            exit(); // Quits game
+                                            Leaderboard.addToLeaderboard(winnings);
+
+                                        case 3:
+                                            Main.exit(); // Quits game
 
                                         default:
                                             System.out.println("Please input a valid number.");
@@ -280,19 +254,14 @@ public class CLI {
                     }
                 }
 
-                // Win state ~ When leaderboard is added, this will set score and name on leaderboard
+                // Win state
                 if (winnings == 1000000) {
                     System.out.println("\nCongratulations! You got all 10 questions correct and won a million dollars!");
-                    System.out.println("Head over to the leaderboard to see your name!");
+                    Leaderboard.leaderboardPrompt(winnings);
                     break;
                 }
             }
         }
 
-    }
-
-    private static void exit() {
-        System.out.println("\nExiting the game...\nThanks for playing!");
-        System.exit(0);
     }
 }
