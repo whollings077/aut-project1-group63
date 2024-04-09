@@ -22,8 +22,6 @@ import org.apache.commons.text.StringEscapeUtils;
 * @author Matthew Warn
 */
 
-//TEST AGAIn
-
 public class API {
 	
 	private String difficulty;
@@ -78,7 +76,7 @@ public class API {
 	            String type = (String) result.get("type");
 	            String category = (String) result.get("category");
 	            String question = StringEscapeUtils.unescapeHtml4((String) result.get("question")); //StringEscapeUtils fixes a bug where symbols would show up in HTML form
-                String correct_answer = StringEscapeUtils.unescapeHtml4((String) result.get("correct_answer")); 
+                    String correct_answer = StringEscapeUtils.unescapeHtml4((String) result.get("correct_answer")); 
 	            JSONArray incorrect_answersJsonArray = (JSONArray) result.get("incorrect_answers");
 	            List<String> incorrect_answers = new ArrayList<>();
 	
