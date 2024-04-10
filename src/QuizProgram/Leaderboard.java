@@ -66,12 +66,14 @@ public class Leaderboard {
             //Write player's name and winnings to the appropriate leaderboard file
             if (winnings == 1000000) {
                 try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("millionaires.txt", true)))) {
-                    out.println(playerName + " " + CLI.lifelineCount + " " + CLI.leaderboardDiff);
+                    String data = playerName + " " + CLI.lifelineCount + " " + CLI.leaderboardDiff;
+                    FileInputOutput.append(data, "millionaires.txt");
                     addToLeaderboardlog.write("Successfully added " + playerName + " to millionaires.txt\n");
                 }
             } else {
                 try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("near_millionaires.txt", true)))) {
-                    out.println(winnings + " " + playerName + " " + CLI.lifelineCount + " " + CLI.leaderboardDiff);
+                    String data = winnings + " " + playerName + " " + CLI.lifelineCount + " " + CLI.leaderboardDiff;
+                    FileInputOutput.append(data, "near_millionaires.txt");
                     addToLeaderboardlog.write("Successfully added " + playerName + " with winnings of " + winnings + " to near_millionaires.txt\n");
                 }
             }
@@ -87,7 +89,7 @@ public class Leaderboard {
 
     public static void displayLeaderBoard() {
         Logger displayLeaderBoardlog = new Logger();
-        
+
         Scanner scanner = new Scanner(System.in);
 
         //A list of player objects for each leaderboard
@@ -136,9 +138,11 @@ public class Leaderboard {
         Logger loadMillionaireslog = new Logger();
         List<Player> millionaires = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("millionaires.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
+        try {
+            String data = FileInputOutput.read("millionaires.txt");
+            String[] lines = data.split("\\r?\\n");
+
+            for (String line : lines) {
                 String[] parts = line.split("\\s+"); //Separates each line by whitespaces
                 String name = parts[0];
                 int lifelineCount = Integer.parseInt(parts[1]);
@@ -148,7 +152,7 @@ public class Leaderboard {
                 millionaires.add(new Player(name, 1000000, lifelineCount, difficulty));
             }
             loadMillionaireslog.write("Successfully loaded millionaires data\n");
-        } catch (IOException | NumberFormatException e) {
+        } catch (Exception e) {
             System.err.println("Failed to load millionaires data: " + e.getMessage());
             loadMillionaireslog.write("Failed to load millionaires data: " + e.getMessage() + "\n");
         }
@@ -160,9 +164,11 @@ public class Leaderboard {
         Logger loadNearMillionaireslog = new Logger();
         List<Player> nearMillionaires = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("near_millionaires.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
+        try {
+            String data = FileInputOutput.read("near_millionaires.txt");
+            String[] lines = data.split("\\r?\\n");
+
+            for (String line : lines) {
                 String[] parts = line.split("\\s+");
                 int winnings = Integer.parseInt(parts[0]);
                 String name = parts[1];
@@ -172,11 +178,11 @@ public class Leaderboard {
                 nearMillionaires.add(new Player(name, winnings, lifelineCount, difficulty));
             }
             loadNearMillionaireslog.write("Successfully loaded near millionaires data.\n");
-        } catch (IOException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             System.err.println("Failed to load near millionaires data: " + e.getMessage());
             loadNearMillionaireslog.write("Failed to load near millionaires data: " + e.getMessage() + "\n");
         }
-        
+
         return nearMillionaires;
     }
 }

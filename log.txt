@@ -87,3 +87,27 @@ User selected easy difficulty
 
 User selected easy difficulty
 
+Successfully loaded millionaires data
+
+Failed to load near millionaires data: For input string: "\u005a\u0065\u0064\u006f\u006e\u0067"
+
+Displaying Leaderboards
+
+Successfully loaded millionaires data
+
+Successfully loaded near millionaires data.
+
+Displaying Leaderboards
+
+User exited to main menu
+
+User selected medium difficulty
+
+Successfully added Steve with winnings of 50000 to near_millionaires.txt
+
+Successfully loaded millionaires data
+
+Successfully loaded near millionaires data.
+
+Displaying Leaderboards
+

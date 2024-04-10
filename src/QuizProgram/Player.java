@@ -6,8 +6,9 @@ package QuizProgram;
 
 /**
  *
- * @author GGPC
+ * @author Matthew Warn
  */
+
 class Player {
     private String name;
     private int winnings;
