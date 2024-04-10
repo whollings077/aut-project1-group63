@@ -1,2 +1,4 @@
 10000 Bobby 1 Hard
 25000 Megan 2 Easy
+50000 William 0 Easy
+2500 \u004d\u0061\u006f \u005a\u0065\u0064\u006f\u006e\u0067 " + 0 Easy

@@ -83,3 +83,7 @@ User selected hard difficulty
 
 User selected hard difficulty
 
+User selected easy difficulty
+
+User selected easy difficulty
+
