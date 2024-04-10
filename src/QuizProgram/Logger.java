@@ -8,40 +8,16 @@ package QuizProgram;
  *
  * @author william
  */
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.io.IOException;
 
 public class Logger {
-    private PrintWriter pw = null;
-    private final String filePath = "log.txt";
+    private final String filePath = "log.txt"; // The file path remains unchanged
 
     public Logger() {
-    }
-
-    public void open() {
-        try {
-            // open the file from the path set in append mode
-            pw = new PrintWriter(new FileOutputStream(filePath, true));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("\nFile open failed!\n");
-        }
+        // Constructor remains empty as there's no need to initialize anything specific
     }
 
     public void write(String message) {
-        if (pw != null) {
-            pw.println(message);
-            pw.flush(); //ensure it is written immediately
-        } else {
-            System.out.println("use open() first logging is not initialised");
-        }
-    }
-
-    public void close() {
-        if (pw != null) {
-            pw.close();
-            pw = null; // close printwriter
-        }
+        // Directly use the FileInputOutput.append method to write the message
+        FileInputOutput.append(message, filePath);
     }
 }

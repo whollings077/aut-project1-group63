@@ -22,7 +22,6 @@ public class CLI {
         System.out.println("Welcome to Who Wants to Be a Millionaire!\n\nEnter a number to navigate the menu. Enter '0' at any time to exit.\n1. How to Play\n2. Start Game\n3. Leaderboard");
 
         Logger clilog = new Logger();
-        clilog.open(); // open log file
 
         OUTER:
         while (true) {
@@ -106,7 +105,6 @@ public class CLI {
                 Leaderboard.displayLeaderBoard();
                 break;
         }
-        clilog.close(); // close logger
         return difficulty;
 
     }

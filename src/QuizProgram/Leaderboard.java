@@ -25,7 +25,6 @@ public class Leaderboard {
     //Asks if the user would like to log their score
     public static void leaderboardPrompt(int winnings) {
         Logger leaderboardPromptLog = new Logger();
-        leaderboardPromptLog.open();
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nWould you like to add your name and score to the leaderboard?\n1. Yes\n2. No");
 
@@ -52,8 +51,6 @@ public class Leaderboard {
                 System.out.println("Please input a valid number.\n");
                 leaderboardPromptLog.write("Leaderboard choice error\n");
                 scanner.next();
-            } finally {
-                leaderboardPromptLog.close(); //the logger is always closed even if an exception happens
             }
         }
     }
@@ -61,7 +58,6 @@ public class Leaderboard {
     public static void addToLeaderboard(int winnings) {
         //Getting player's name
         Logger addToLeaderboardlog = new Logger();
-        addToLeaderboardlog.open();
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nEnter your name:");
         String playerName = scanner.nextLine();
@@ -82,9 +78,6 @@ public class Leaderboard {
         } catch (IOException e) {
             System.out.println("Failed to update leaderboard." + e.getMessage());
             addToLeaderboardlog.write("Failed to update leaderboard for " + playerName + " with exception: " + e.getMessage() + "\n");
-        } finally {
-            // ensure logger gets closed
-            addToLeaderboardlog.close();
         }
 
         //Takes player back to main menu
@@ -94,7 +87,6 @@ public class Leaderboard {
 
     public static void displayLeaderBoard() {
         Logger displayLeaderBoardlog = new Logger();
-        displayLeaderBoardlog.open();//open logger
         
         Scanner scanner = new Scanner(System.in);
 
@@ -135,8 +127,6 @@ public class Leaderboard {
                 System.out.println("Please input a valid number.");
                 displayLeaderBoardlog.write("Exception caught during leaderboard display exit choice: " + e.getMessage() + "\n");
                 scanner.next();
-            } finally {
-                displayLeaderBoardlog.close();
             }
         }
     }
@@ -144,7 +134,6 @@ public class Leaderboard {
     //Reads the millionaires text file and creates Player objects
     private static List<Player> loadMillionaires() {
         Logger loadMillionaireslog = new Logger();
-        loadMillionaireslog.open();
         List<Player> millionaires = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("millionaires.txt"))) {
@@ -162,8 +151,6 @@ public class Leaderboard {
         } catch (IOException | NumberFormatException e) {
             System.err.println("Failed to load millionaires data: " + e.getMessage());
             loadMillionaireslog.write("Failed to load millionaires data: " + e.getMessage() + "\n");
-        } finally {
-            loadMillionaireslog.close(); // Ensure the logger is always closed
         }
         return millionaires;
     }
@@ -171,7 +158,6 @@ public class Leaderboard {
     //Same as loadMillionaires()
     private static List<Player> loadNearMillionaires() {
         Logger loadNearMillionaireslog = new Logger();
-        loadNearMillionaireslog.open();
         List<Player> nearMillionaires = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("near_millionaires.txt"))) {
@@ -189,10 +175,7 @@ public class Leaderboard {
         } catch (IOException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.err.println("Failed to load near millionaires data: " + e.getMessage());
             loadNearMillionaireslog.write("Failed to load near millionaires data: " + e.getMessage() + "\n");
-        }finally {
-        // Close the logger
-        loadNearMillionaireslog.close();
-    }
+        }
         
         return nearMillionaires;
     }
