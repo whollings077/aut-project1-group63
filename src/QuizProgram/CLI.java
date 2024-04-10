@@ -49,7 +49,7 @@ public class CLI {
             case 1: //If user selects "How to Play"
                 System.out.println("\nIn this game you will be asked 10 random questions at a difficulty of your choosing!\nYou will be presented with 4 possible answers but only ONE will be correct.\n");
                 System.out.println("You have two lifelines which can each help you out with a question if you're stuck.\n50:50 will get rid of two incorrect answers (Only works on questions with 4 answers)\nSkip will skip the current question.\n");
-                System.out.println("To answer questions, simply type in the number corresponding to your answer.\nTo activate your lifeline, input 5 or 6 instead of answering.\n");
+                System.out.println("To answer questions, simply type in the number corresponding to your answer.\nTo activate your lifeline, input 5 (50:50) or 6 (Skip) instead of answering.\n");
                 System.out.println("Each question you answer will earn you more money and if you get all 10 correct, you win $1,000,000! Get one wrong and it's back to zero!");
 
                 clilog.write("\nUser selected How to Play");

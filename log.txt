@@ -1,4 +1,3 @@
-test
 User selected easy difficulty
 
 
@@ -110,4 +109,20 @@ Successfully loaded millionaires data
 Successfully loaded near millionaires data.
 
 Displaying Leaderboards
+
+
+User selected How to Play
+User selected medium difficulty
+
+User selected easy difficulty
+
+Successfully added 2 with winnings of 10000 to near_millionaires.txt
+
+Successfully loaded millionaires data
+
+Successfully loaded near millionaires data.
+
+Displaying Leaderboards
+
+User exited to main menu
 
