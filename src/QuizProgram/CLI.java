@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
+
     //Values to be stored for the leaderboard
     public static String leaderboardDiff;
     public static int lifelineCount = 0;
@@ -19,7 +20,7 @@ public class CLI {
         int diffInput = 0;
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to Who Wants to Be a Millionaire!\n\nEnter a number to navigate the menu. Enter '0' at any time to exit.\n1. How to Play\n2. Start Game\n3. Leaderboard");
+        System.out.println("Welcome to Who Wants to Be a Millionaire!\n\nEnter a number to navigate the menu. Enter '0' at any time to exit.\n1. How to Play\n2. Start Game\n3. Leaderboard\n4. Endless Mode");
 
         Logger clilog = new Logger();
 
@@ -31,6 +32,7 @@ public class CLI {
                     case 1:
                     case 2:
                     case 3:
+                    case 4:
                         break OUTER;
                     case 0:
                         Main.exit();
@@ -65,10 +67,10 @@ public class CLI {
                             case 2:
                             case 3:
                                 break OUTER;
-                                
+
                             case 0:
                                 Main.exit();
-                                
+
                             default:
                                 System.out.println("Please input a valid number.\n");
                         }
@@ -78,7 +80,7 @@ public class CLI {
                         scanner.next();
                     }
                 }
-                
+
                 switch (diffInput) {
                     case 1:
                         difficulty = "easy";
@@ -100,10 +102,12 @@ public class CLI {
                         break;
                 }
                 break;
-            
+
             case 3: //If the user selects Leaderboard
                 Leaderboard.displayLeaderBoard();
                 break;
+            case 4: //endless mode
+                EndlessMode.play(difficulty);
         }
         return difficulty;
 
@@ -133,10 +137,10 @@ public class CLI {
         {
             for (Question question : questions) {
                 System.out.println("\n" + question.getQuestion());
-                
+
                 //DEBUG TOOL TO GET TO THE END! REMOVE BEFORE SUBMISSION
                 System.out.println(question.getCorrect_Answer());
-                
+
                 List<String> options = new ArrayList<>(question.getIncorrect_Answers());
                 options.add(question.getCorrect_Answer()); //Adds the correct answer to the list of  answer options for a question
                 Collections.shuffle(options); //This shuffles the collection of questions so that the correct one is in a random location
@@ -175,7 +179,7 @@ public class CLI {
                                     System.out.println("\nYou cannot use your 50:50 lifeline for this question.");
                                     continue;
                                 }
-                                
+
                                 Lifeline.fiftyFifty(options, question.getCorrect_Answer());
                                 fiftyFiftyUsed = true;
                                 lifelineCount++;
@@ -226,7 +230,7 @@ public class CLI {
                                             System.out.println("");
                                             Main.runGame(); // Restarts game
                                             return;
-                                            
+
                                         case 2:
                                             Leaderboard.addToLeaderboard(winnings);
 
@@ -262,4 +266,7 @@ public class CLI {
         }
 
     }
+
+
+
 }
