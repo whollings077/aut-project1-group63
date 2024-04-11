@@ -107,6 +107,18 @@ public class CLI {
                 Leaderboard.displayLeaderBoard();
                 break;
             case 4: //endless mode
+                if (difficulty.isBlank()){
+                    int endlessdifficulty;
+                    System.out.println("What difficulty would you like to play Endless Mode on?\n1. Easy\n2. Medium\n3. Hard");
+                    endlessdifficulty=scanner.nextInt();
+                    if (endlessdifficulty==1){
+                        difficulty="easy";
+                    }else if (endlessdifficulty==2){
+                        difficulty="medium";
+                    }else if (endlessdifficulty==3){
+                        difficulty="hard";
+                    }
+                }
                 EndlessMode.play(difficulty);
         }
         return difficulty;
