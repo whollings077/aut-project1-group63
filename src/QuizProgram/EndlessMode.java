@@ -99,7 +99,7 @@ public class EndlessMode {
     }
 
     public static boolean askToContinue() {// handles asking the user if they want to continue playing
-        System.out.println("\nWould you like to continue? (Yes = 1 / No = 0)");
+        System.out.println("\nWould you like to continue? (1. Yes / 2. No)");
         try {
             int input = scanner.nextInt();
             return input == 1;

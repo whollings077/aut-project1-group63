@@ -126,3 +126,27 @@ Displaying Leaderboards
 
 User exited to main menu
 
+Endless mode correct answers 0
+
+
+User selected How to Play
+User selected easy difficulty
+
+User selected easy difficulty
+
+User selected easy difficulty
+
+Successfully added Matthew with winnings of 10000 to near_millionaires.txt
+
+Successfully loaded millionaires data
+
+Successfully loaded near millionaires data.
+
+Displaying Leaderboards
+
+User exited to main menu
+
+Endless mode correct answers 1
+
+Endless mode correct answers 1
+

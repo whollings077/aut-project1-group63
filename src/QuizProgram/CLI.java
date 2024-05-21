@@ -150,9 +150,6 @@ public class CLI {
             for (Question question : questions) {
                 System.out.println("\n" + question.getQuestion());
 
-                //DEBUG TOOL TO GET TO THE END! REMOVE BEFORE SUBMISSION
-                System.out.println(question.getCorrect_Answer());
-
                 List<String> options = new ArrayList<>(question.getIncorrect_Answers());
                 options.add(question.getCorrect_Answer()); //Adds the correct answer to the list of  answer options for a question
                 Collections.shuffle(options); //This shuffles the collection of questions so that the correct one is in a random location
