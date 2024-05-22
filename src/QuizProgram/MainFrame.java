@@ -4,6 +4,12 @@
  */
 package QuizProgram;
 
+import java.awt.CardLayout;
+import java.util.List;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 /**
  *
  * @author GGPC
@@ -26,14 +32,25 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        MainPanel = new javax.swing.JPanel();
-        TextPanel = new javax.swing.JPanel();
-        MainLabel = new javax.swing.JLabel();
-        ButtonsPanel = new javax.swing.JPanel();
-        Button1 = new javax.swing.JButton();
-        Button2 = new javax.swing.JButton();
-        Button3 = new javax.swing.JButton();
-        Button4 = new javax.swing.JButton();
+        mainPanel = new javax.swing.JPanel();
+        menuPanel = new javax.swing.JPanel();
+        textPanel = new javax.swing.JPanel();
+        menuTitle = new javax.swing.JLabel();
+        buttonsPanel = new javax.swing.JPanel();
+        button1 = new javax.swing.JButton();
+        button2 = new javax.swing.JButton();
+        button3 = new javax.swing.JButton();
+        button4 = new javax.swing.JButton();
+        howToPanel = new javax.swing.JPanel();
+        howToHeaderPanel = new javax.swing.JPanel();
+        howToPlayTitle = new javax.swing.JLabel();
+        howToBack = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        leaderboardPanel = new javax.swing.JPanel();
+        leaderboardHeaderPanel = new javax.swing.JPanel();
+        leaderboardTitle = new javax.swing.JLabel();
+        leaderboardBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Who Wants To Be A Millionaire");
@@ -41,114 +58,244 @@ public class MainFrame extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(860, 640));
         setResizable(false);
 
-        MainPanel.setBackground(new java.awt.Color(255, 204, 255));
-        MainPanel.setName(""); // NOI18N
-        MainPanel.setPreferredSize(new java.awt.Dimension(860, 640));
-        MainPanel.setLayout(new java.awt.BorderLayout());
+        mainPanel.setBackground(new java.awt.Color(255, 204, 255));
+        mainPanel.setName(""); // NOI18N
+        mainPanel.setPreferredSize(new java.awt.Dimension(860, 640));
+        mainPanel.setLayout(new java.awt.CardLayout());
 
-        TextPanel.setBackground(null);
+        menuPanel.setBackground(new java.awt.Color(255, 204, 255));
+        menuPanel.setLayout(new java.awt.BorderLayout());
 
-        MainLabel.setFont(new java.awt.Font("Century Schoolbook", 1, 32)); // NOI18N
-        MainLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MainLabel.setText("Welcome to Who Wants To Be A Millionaire!");
-        MainLabel.setAlignmentX(0.5F);
+        textPanel.setOpaque(false);
 
-        javax.swing.GroupLayout TextPanelLayout = new javax.swing.GroupLayout(TextPanel);
-        TextPanel.setLayout(TextPanelLayout);
-        TextPanelLayout.setHorizontalGroup(
-            TextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(MainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        TextPanelLayout.setVerticalGroup(
-            TextPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TextPanelLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(MainLabel)
+        menuTitle.setFont(new java.awt.Font("Century Schoolbook", 1, 32)); // NOI18N
+        menuTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        menuTitle.setText("Welcome to Who Wants To Be A Millionaire!");
+        menuTitle.setAlignmentX(0.5F);
+
+        javax.swing.GroupLayout textPanelLayout = new javax.swing.GroupLayout(textPanel);
+        textPanel.setLayout(textPanelLayout);
+        textPanelLayout.setHorizontalGroup(
+            textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(textPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(menuTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        textPanelLayout.setVerticalGroup(
+            textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(textPanelLayout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(menuTitle)
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
 
-        MainPanel.add(TextPanel, java.awt.BorderLayout.CENTER);
+        menuPanel.add(textPanel, java.awt.BorderLayout.CENTER);
 
-        ButtonsPanel.setBackground(null);
-        ButtonsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        ButtonsPanel.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
+        buttonsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
 
-        Button1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        Button1.setText("Start Game");
-        Button1.setPreferredSize(new java.awt.Dimension(250, 150));
-        Button1.addActionListener(new java.awt.event.ActionListener() {
+        button1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button1.setText("Start Game");
+        button1.setPreferredSize(new java.awt.Dimension(250, 150));
+        button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button1ActionPerformed(evt);
+                button1ActionPerformed(evt);
             }
         });
-        ButtonsPanel.add(Button1);
+        buttonsPanel.add(button1);
 
-        Button2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        Button2.setText("Endless Mode");
-        Button2.setPreferredSize(new java.awt.Dimension(250, 150));
-        Button2.addActionListener(new java.awt.event.ActionListener() {
+        button2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button2.setText("Endless Mode");
+        button2.setPreferredSize(new java.awt.Dimension(250, 150));
+        button2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button2ActionPerformed(evt);
+                button2ActionPerformed(evt);
             }
         });
-        ButtonsPanel.add(Button2);
+        buttonsPanel.add(button2);
 
-        Button3.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        Button3.setText("How to Play");
-        Button3.setPreferredSize(new java.awt.Dimension(250, 150));
-        Button3.addActionListener(new java.awt.event.ActionListener() {
+        button3.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button3.setText("How to Play");
+        button3.setPreferredSize(new java.awt.Dimension(250, 150));
+        button3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button3ActionPerformed(evt);
+                howToPlayButtonPressed(evt);
             }
         });
-        ButtonsPanel.add(Button3);
+        buttonsPanel.add(button3);
 
-        Button4.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        Button4.setText("Leaderboard");
-        Button4.setPreferredSize(new java.awt.Dimension(250, 150));
-        Button4.addActionListener(new java.awt.event.ActionListener() {
+        button4.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button4.setText("Leaderboard");
+        button4.setPreferredSize(new java.awt.Dimension(250, 150));
+        button4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button4ActionPerformed(evt);
+                leaderboardButtonPressed(evt);
             }
         });
-        ButtonsPanel.add(Button4);
+        buttonsPanel.add(button4);
 
-        MainPanel.add(ButtonsPanel, java.awt.BorderLayout.SOUTH);
+        menuPanel.add(buttonsPanel, java.awt.BorderLayout.SOUTH);
+
+        mainPanel.add(menuPanel, "menuPanel");
+
+        howToPanel.setBackground(new java.awt.Color(255, 204, 255));
+        howToPanel.setName(""); // NOI18N
+        howToPanel.setPreferredSize(new java.awt.Dimension(860, 640));
+        howToPanel.setLayout(new java.awt.BorderLayout());
+
+        howToHeaderPanel.setBackground(new java.awt.Color(255, 204, 255));
+
+        howToPlayTitle.setFont(new java.awt.Font("Century Schoolbook", 1, 36)); // NOI18N
+        howToPlayTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        howToPlayTitle.setText("How to Play");
+        howToPlayTitle.setAlignmentX(0.5F);
+
+        howToBack.setBackground(new java.awt.Color(255, 153, 153));
+        howToBack.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        howToBack.setText("Back");
+        howToBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        howToBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                howToBack(evt);
+            }
+        });
+
+        javax.swing.GroupLayout howToHeaderPanelLayout = new javax.swing.GroupLayout(howToHeaderPanel);
+        howToHeaderPanel.setLayout(howToHeaderPanelLayout);
+        howToHeaderPanelLayout.setHorizontalGroup(
+            howToHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(howToHeaderPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(howToBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(183, 183, 183)
+                .addComponent(howToPlayTitle)
+                .addContainerGap(301, Short.MAX_VALUE))
+        );
+        howToHeaderPanelLayout.setVerticalGroup(
+            howToHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(howToHeaderPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(howToHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(howToBack, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(howToPlayTitle))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
+        howToPanel.add(howToHeaderPanel, java.awt.BorderLayout.NORTH);
+
+        jScrollPane3.setBorder(null);
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane3.setMinimumSize(new java.awt.Dimension(200, 200));
+        jScrollPane3.setOpaque(false);
+
+        jTextArea2.setEditable(false);
+        jTextArea2.setBackground(new java.awt.Color(255, 204, 255));
+        jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 23)); // NOI18N
+        jTextArea2.setRows(5);
+        jTextArea2.setText(" In this game you will be asked 10 random questions at a difficulty of your choosing! \n You will be presented with 4 possible answers but only ONE will be correct.\n\n You have two lifelines which can each help you out with a question if you're stuck. \n 50:50 will get rid of two incorrect answers (Only works on questions with 4 answers)\n Skip will skip the current question.\n\n To answer questions, click on the button with your answer.\n To activate your lifelines, click on the buttons in the top right.\n\n Each question you answer will earn you more money and if you get all 10\n correct, you win $1,000,000! Get one wrong and it's back to zero!");
+        jTextArea2.setBorder(null);
+        jTextArea2.setDisabledTextColor(null);
+        jTextArea2.setOpaque(false);
+        jScrollPane3.setViewportView(jTextArea2);
+
+        howToPanel.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+
+        mainPanel.add(howToPanel, "howToPanel");
+
+        leaderboardPanel.setBackground(new java.awt.Color(255, 204, 255));
+        leaderboardPanel.setName(""); // NOI18N
+        leaderboardPanel.setPreferredSize(new java.awt.Dimension(860, 640));
+        leaderboardPanel.setLayout(new java.awt.BorderLayout());
+
+        leaderboardHeaderPanel.setBackground(new java.awt.Color(255, 204, 255));
+
+        leaderboardTitle.setFont(new java.awt.Font("Century Schoolbook", 1, 36)); // NOI18N
+        leaderboardTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        leaderboardTitle.setText("Leaderboard");
+        leaderboardTitle.setAlignmentX(0.5F);
+
+        leaderboardBack.setBackground(new java.awt.Color(255, 153, 153));
+        leaderboardBack.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        leaderboardBack.setText("Back");
+        leaderboardBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        leaderboardBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaderboardBackActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout leaderboardHeaderPanelLayout = new javax.swing.GroupLayout(leaderboardHeaderPanel);
+        leaderboardHeaderPanel.setLayout(leaderboardHeaderPanelLayout);
+        leaderboardHeaderPanelLayout.setHorizontalGroup(
+            leaderboardHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leaderboardHeaderPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(leaderboardBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(166, 166, 166)
+                .addComponent(leaderboardTitle)
+                .addContainerGap(301, Short.MAX_VALUE))
+        );
+        leaderboardHeaderPanelLayout.setVerticalGroup(
+            leaderboardHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leaderboardHeaderPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(leaderboardHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(leaderboardBack, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(leaderboardTitle))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
+        leaderboardPanel.add(leaderboardHeaderPanel, java.awt.BorderLayout.NORTH);
+
+        mainPanel.add(leaderboardPanel, "leaderboardPanel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button1ActionPerformed
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Button1ActionPerformed
+    }//GEN-LAST:event_button1ActionPerformed
 
-    private void Button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Button3ActionPerformed
+    private void howToPlayButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_howToPlayButtonPressed
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "howToPanel");
+    }//GEN-LAST:event_howToPlayButtonPressed
 
-    private void Button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Button4ActionPerformed
+    private void leaderboardButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardButtonPressed
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "leaderboardPanel");
+    }//GEN-LAST:event_leaderboardButtonPressed
 
-    private void Button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button2ActionPerformed
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Button2ActionPerformed
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void howToBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_howToBack
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_howToBack
+
+    private void leaderboardBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardBackActionPerformed
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_leaderboardBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,13 +333,24 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Button1;
-    private javax.swing.JButton Button2;
-    private javax.swing.JButton Button3;
-    private javax.swing.JButton Button4;
-    private javax.swing.JPanel ButtonsPanel;
-    private javax.swing.JLabel MainLabel;
-    private javax.swing.JPanel MainPanel;
-    private javax.swing.JPanel TextPanel;
+    private javax.swing.JButton button1;
+    private javax.swing.JButton button2;
+    private javax.swing.JButton button3;
+    private javax.swing.JButton button4;
+    private javax.swing.JPanel buttonsPanel;
+    private javax.swing.JButton howToBack;
+    private javax.swing.JPanel howToHeaderPanel;
+    private javax.swing.JPanel howToPanel;
+    private javax.swing.JLabel howToPlayTitle;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JButton leaderboardBack;
+    private javax.swing.JPanel leaderboardHeaderPanel;
+    private javax.swing.JPanel leaderboardPanel;
+    private javax.swing.JLabel leaderboardTitle;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel menuPanel;
+    private javax.swing.JLabel menuTitle;
+    private javax.swing.JPanel textPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -150,3 +150,7 @@ Endless mode correct answers 1
 
 Endless mode correct answers 1
 
+User selected easy difficulty
+
+
+User selected How to Play
