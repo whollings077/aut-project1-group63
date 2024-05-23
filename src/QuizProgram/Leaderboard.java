@@ -4,46 +4,73 @@
  */
 package QuizProgram;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-
 /**
  *
- * @author Matthew Warn
+ * @author william
  */
-public class Leaderboard {
+public class Leaderboard { //this code is really scuffed because i wrote it to work without needing to change any of the other classes
 
-    //Asks if the user would like to log their score
+    private static final String DB_URL = "jdbc:derby://localhost:1527/QuizDB;create=true";
+    private static final String USER = "app";
+    private static final String PASS = "app";
+
+    static {
+        // setup the tables if they dont exist
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             Statement stmt = conn.createStatement()) {
+            String createMillionairesTable = "CREATE TABLE Millionaires ("
+                    + "ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                    + "Name VARCHAR(255),"
+                    + "LifelineCount INT,"
+                    + "Difficulty VARCHAR(255))";
+
+            String createNearMillionairesTable = "CREATE TABLE NearMillionaires ("
+                    + "ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                    + "Winnings INT,"
+                    + "Name VARCHAR(255),"
+                    + "LifelineCount INT,"
+                    + "Difficulty VARCHAR(255))";
+
+            stmt.executeUpdate(createMillionairesTable);
+            stmt.executeUpdate(createNearMillionairesTable);
+        } catch (SQLException e) {
+            // exceptions like table already existing
+        }
+    }
+
     public static void leaderboardPrompt(int winnings) {
         Logger leaderboardPromptLog = new Logger();
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nWould you like to add your name and score to the leaderboard?\n1. Yes\n2. No");
 
-        OUTER:
         while (true) {
             try {
                 int leadChoice = scanner.nextInt();
 
                 switch (leadChoice) {
-                    case 1: //Yes
+                    case 1: // Yes
                         leaderboardPromptLog.write("Leaderboard Choice Yes\n");
                         addToLeaderboard(winnings);
-                    case 2: //No
+                        break;
+                    case 2: // No
                         System.out.println("\n");
                         leaderboardPromptLog.write("Leaderboard Choice No Running Game\n");
                         Main.runGame();
-                    case 0: //Exit
+                        break;
+                    case 0: // Exit
                         Main.exit();
-
+                        break;
                     default:
                         System.out.println("Please input a valid number.\n");
                 }
@@ -56,50 +83,51 @@ public class Leaderboard {
     }
 
     public static void addToLeaderboard(int winnings) {
-        //Getting player's name
         Logger addToLeaderboardlog = new Logger();
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nEnter your name:");
         String playerName = scanner.nextLine();
 
-        try {
-            //Write player's name and winnings to the appropriate leaderboard file
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
             if (winnings == 1000000) {
-                try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("millionaires.txt", true)))) {
-                    String data = playerName + " " + CLI.lifelineCount + " " + CLI.leaderboardDiff;
-                    FileInputOutput.append(data, "millionaires.txt");
-                    addToLeaderboardlog.write("Successfully added " + playerName + " to millionaires.txt\n");
+                String sql = "INSERT INTO Millionaires (Name, LifelineCount, Difficulty) VALUES (?, ?, ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setString(1, playerName);
+                    pstmt.setInt(2, CLI.lifelineCount);
+                    pstmt.setString(3, CLI.leaderboardDiff);
+                    pstmt.executeUpdate();
+                    addToLeaderboardlog.write("Successfully added " + playerName + " to Millionaires\n");
                 }
             } else {
-                try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("near_millionaires.txt", true)))) {
-                    String data = winnings + " " + playerName + " " + CLI.lifelineCount + " " + CLI.leaderboardDiff;
-                    FileInputOutput.append(data, "near_millionaires.txt");
-                    addToLeaderboardlog.write("Successfully added " + playerName + " with winnings of " + winnings + " to near_millionaires.txt\n");
+                String sql = "INSERT INTO NearMillionaires (Winnings, Name, LifelineCount, Difficulty) VALUES (?, ?, ?, ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setInt(1, winnings);
+                    pstmt.setString(2, playerName);
+                    pstmt.setInt(3, CLI.lifelineCount);
+                    pstmt.setString(4, CLI.leaderboardDiff);
+                    pstmt.executeUpdate();
+                    addToLeaderboardlog.write("Successfully added " + playerName + " with winnings of " + winnings + " to NearMillionaires\n");
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Failed to update leaderboard." + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Failed to update leaderboard. " + e.getMessage());
             addToLeaderboardlog.write("Failed to update leaderboard for " + playerName + " with exception: " + e.getMessage() + "\n");
         }
 
-        //Takes player back to main menu
         System.out.println("\n");
         Main.runGame();
     }
 
     public static void displayLeaderBoard() {
         Logger displayLeaderBoardlog = new Logger();
-
         Scanner scanner = new Scanner(System.in);
 
-        //A list of player objects for each leaderboard
         List<Player> millionaires = loadMillionaires();
         List<Player> nearMillionaires = loadNearMillionaires();
 
-        //Sorting the near millionaires by winnings, highest to lowest
         Collections.sort(nearMillionaires, Comparator.comparing(Player::getWinnings).reversed());
         displayLeaderBoardlog.write("Displaying Leaderboards\n");
-        //Printing Leaderboards
+
         System.out.println("\n~~~~~~~LIST OF MILLIONAIRES~~~~~~~");
         for (Player player : millionaires) {
             System.out.println("-~=" + player.getName() + "=~- | Difficulty: " + player.getDifficulty() + " | Lifelines Used: " + player.getLifelineCount());
@@ -119,8 +147,8 @@ public class Leaderboard {
                 switch (exitChoice) {
                     case 0:
                         displayLeaderBoardlog.write("User exited to main menu\n");
-                        Main.runGame(); //Back to main menu
-
+                        Main.runGame();
+                        break;
                     default:
                         displayLeaderBoardlog.write("Invalid number input for exiting leaderboard display\n");
                         System.out.println("Please input a valid number.");
@@ -133,52 +161,46 @@ public class Leaderboard {
         }
     }
 
-    //Reads the millionaires text file and creates Player objects
     private static List<Player> loadMillionaires() {
         Logger loadMillionaireslog = new Logger();
         List<Player> millionaires = new ArrayList<>();
 
-        try {
-            String data = FileInputOutput.read("millionaires.txt");
-            String[] lines = data.split("\\r?\\n");
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM Millionaires")) {
 
-            for (String line : lines) {
-                String[] parts = line.split("\\s+"); //Separates each line by whitespaces
-                String name = parts[0];
-                int lifelineCount = Integer.parseInt(parts[1]);
-                String difficulty = parts[2];
-
-                //Adds player to the ArrayList
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                int lifelineCount = rs.getInt("LifelineCount");
+                String difficulty = rs.getString("Difficulty");
                 millionaires.add(new Player(name, 1000000, lifelineCount, difficulty));
             }
             loadMillionaireslog.write("Successfully loaded millionaires data\n");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println("Failed to load millionaires data: " + e.getMessage());
             loadMillionaireslog.write("Failed to load millionaires data: " + e.getMessage() + "\n");
         }
+
         return millionaires;
     }
 
-    //Same as loadMillionaires()
     private static List<Player> loadNearMillionaires() {
         Logger loadNearMillionaireslog = new Logger();
         List<Player> nearMillionaires = new ArrayList<>();
 
-        try {
-            String data = FileInputOutput.read("near_millionaires.txt");
-            String[] lines = data.split("\\r?\\n");
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM NearMillionaires")) {
 
-            for (String line : lines) {
-                String[] parts = line.split("\\s+");
-                int winnings = Integer.parseInt(parts[0]);
-                String name = parts[1];
-                int lifelineCount = Integer.parseInt(parts[2]);
-                String difficulty = parts[3];
-
+            while (rs.next()) {
+                int winnings = rs.getInt("Winnings");
+                String name = rs.getString("Name");
+                int lifelineCount = rs.getInt("LifelineCount");
+                String difficulty = rs.getString("Difficulty");
                 nearMillionaires.add(new Player(name, winnings, lifelineCount, difficulty));
             }
-            loadNearMillionaireslog.write("Successfully loaded near millionaires data.\n");
-        } catch (Exception e) {
+            loadNearMillionaireslog.write("Successfully loaded near millionaires data\n");
+        } catch (SQLException e) {
             System.err.println("Failed to load near millionaires data: " + e.getMessage());
             loadNearMillionaireslog.write("Failed to load near millionaires data: " + e.getMessage() + "\n");
         }
