@@ -5,7 +5,10 @@
 package QuizProgram;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.util.Iterator;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -15,7 +18,8 @@ import javax.swing.text.StyledDocument;
  * @author GGPC
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    public List<Question> questions;
+    
     /**
      * Creates new form MainFrame
      */
@@ -41,6 +45,25 @@ public class MainFrame extends javax.swing.JFrame {
         button2 = new javax.swing.JButton();
         button3 = new javax.swing.JButton();
         button4 = new javax.swing.JButton();
+        difficultyPanel = new javax.swing.JPanel();
+        difficultyHeader = new javax.swing.JPanel();
+        Question1 = new javax.swing.JLabel();
+        difficultyBack = new javax.swing.JButton();
+        difficultyOptions = new javax.swing.JPanel();
+        button9 = new javax.swing.JButton();
+        button10 = new javax.swing.JButton();
+        button11 = new javax.swing.JButton();
+        gamePanel = new javax.swing.JPanel();
+        gameHeaderPanel = new javax.swing.JPanel();
+        questionNumber = new javax.swing.JLabel();
+        howToBack1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        questionText = new javax.swing.JTextArea();
+        answersPanel = new javax.swing.JPanel();
+        answer1 = new javax.swing.JButton();
+        answer2 = new javax.swing.JButton();
+        answer3 = new javax.swing.JButton();
+        answer4 = new javax.swing.JButton();
         howToPanel = new javax.swing.JPanel();
         howToHeaderPanel = new javax.swing.JPanel();
         howToPlayTitle = new javax.swing.JLabel();
@@ -87,7 +110,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(textPanelLayout.createSequentialGroup()
                 .addGap(113, 113, 113)
                 .addComponent(menuTitle)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         menuPanel.add(textPanel, java.awt.BorderLayout.CENTER);
@@ -140,6 +163,206 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(menuPanel, "menuPanel");
 
+        difficultyPanel.setBackground(new java.awt.Color(255, 204, 255));
+        difficultyPanel.setLayout(new java.awt.BorderLayout());
+
+        difficultyHeader.setOpaque(false);
+
+        Question1.setFont(new java.awt.Font("Century Schoolbook", 1, 32)); // NOI18N
+        Question1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Question1.setText("Please Select a Difficulty");
+        Question1.setAlignmentX(0.5F);
+
+        difficultyBack.setBackground(new java.awt.Color(255, 153, 153));
+        difficultyBack.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        difficultyBack.setText("Back");
+        difficultyBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        difficultyBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                difficultyBack(evt);
+            }
+        });
+
+        javax.swing.GroupLayout difficultyHeaderLayout = new javax.swing.GroupLayout(difficultyHeader);
+        difficultyHeader.setLayout(difficultyHeaderLayout);
+        difficultyHeaderLayout.setHorizontalGroup(
+            difficultyHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(difficultyHeaderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(difficultyHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Question1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(difficultyHeaderLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(difficultyBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        difficultyHeaderLayout.setVerticalGroup(
+            difficultyHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(difficultyHeaderLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(difficultyBack, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(Question1)
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
+
+        difficultyPanel.add(difficultyHeader, java.awt.BorderLayout.CENTER);
+
+        difficultyOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        difficultyOptions.setOpaque(false);
+        difficultyOptions.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
+
+        button9.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button9.setText("Easy");
+        button9.setPreferredSize(new java.awt.Dimension(250, 150));
+        button9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button9ActionPerformed(evt);
+            }
+        });
+        difficultyOptions.add(button9);
+
+        button10.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button10.setText("Medium");
+        button10.setPreferredSize(new java.awt.Dimension(250, 150));
+        button10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button10ActionPerformed(evt);
+            }
+        });
+        difficultyOptions.add(button10);
+
+        button11.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button11.setText("Hard");
+        button11.setPreferredSize(new java.awt.Dimension(250, 150));
+        button11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button11ActionPerformed(evt);
+            }
+        });
+        difficultyOptions.add(button11);
+
+        difficultyPanel.add(difficultyOptions, java.awt.BorderLayout.SOUTH);
+
+        mainPanel.add(difficultyPanel, "difficultyPanel");
+
+        gamePanel.setBackground(new java.awt.Color(255, 204, 255));
+        gamePanel.setLayout(new java.awt.BorderLayout());
+
+        gameHeaderPanel.setOpaque(false);
+
+        questionNumber.setFont(new java.awt.Font("Century Schoolbook", 1, 32)); // NOI18N
+        questionNumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        questionNumber.setAlignmentX(0.5F);
+
+        howToBack1.setBackground(new java.awt.Color(255, 153, 153));
+        howToBack1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        howToBack1.setText("Back");
+        howToBack1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        howToBack1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gameBack(evt);
+            }
+        });
+
+        jScrollPane2.setBackground(null);
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(255, 204, 255)));
+        jScrollPane2.setOpaque(false);
+        jScrollPane2.setWheelScrollingEnabled(false);
+        jScrollPane2.setOpaque(false);
+        jScrollPane2.getViewport().setOpaque(false);
+        jScrollPane2.setBorder(null);
+
+        questionText.setEditable(false);
+        questionText.setBackground(null);
+        questionText.setColumns(20);
+        questionText.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        questionText.setRows(5);
+        questionText.setBorder(null);
+        questionText.setOpaque(false);
+        questionText.setOpaque(false);
+        questionText.setBackground(new Color(0, 0, 0, 0)); 
+        questionText.setLineWrap(true);
+        questionText.setWrapStyleWord(true);
+        questionText.setBorder(null);
+        jScrollPane2.setViewportView(questionText);
+
+        javax.swing.GroupLayout gameHeaderPanelLayout = new javax.swing.GroupLayout(gameHeaderPanel);
+        gameHeaderPanel.setLayout(gameHeaderPanelLayout);
+        gameHeaderPanelLayout.setHorizontalGroup(
+            gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(gameHeaderPanelLayout.createSequentialGroup()
+                        .addComponent(howToBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(questionNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 216, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        gameHeaderPanelLayout.setVerticalGroup(
+            gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(howToBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(questionNumber))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        gamePanel.add(gameHeaderPanel, java.awt.BorderLayout.CENTER);
+
+        answersPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        answersPanel.setOpaque(false);
+        answersPanel.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
+
+        answer1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer1.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer1(evt);
+            }
+        });
+        answersPanel.add(answer1);
+
+        answer2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer2.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer2ActionPerformed(evt);
+            }
+        });
+        answersPanel.add(answer2);
+
+        answer3.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer3.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer3howToPlayButtonPressed(evt);
+            }
+        });
+        answersPanel.add(answer3);
+
+        answer4.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer4.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer4leaderboardButtonPressed(evt);
+            }
+        });
+        answersPanel.add(answer4);
+
+        gamePanel.add(answersPanel, java.awt.BorderLayout.SOUTH);
+
+        mainPanel.add(gamePanel, "gamePanel");
+
         howToPanel.setBackground(new java.awt.Color(255, 204, 255));
         howToPanel.setName(""); // NOI18N
         howToPanel.setPreferredSize(new java.awt.Dimension(860, 640));
@@ -169,9 +392,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(howToHeaderPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(howToBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(183, 183, 183)
+                .addGap(155, 155, 155)
                 .addComponent(howToPlayTitle)
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         howToHeaderPanelLayout.setVerticalGroup(
             howToHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +493,8 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "difficultyPanel");
     }//GEN-LAST:event_button1ActionPerformed
 
     private void howToPlayButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_howToPlayButtonPressed
@@ -292,10 +516,60 @@ public class MainFrame extends javax.swing.JFrame {
         cardLayout.show(mainPanel, "menuPanel");
     }//GEN-LAST:event_howToBack
 
+    private void answer1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer1
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer1
+
+    private void answer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer2ActionPerformed
+
+    private void answer3howToPlayButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer3howToPlayButtonPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer3howToPlayButtonPressed
+
+    private void answer4leaderboardButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer4leaderboardButtonPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer4leaderboardButtonPressed
+
+    private void gameBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameBack
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_gameBack
+
     private void leaderboardBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardBackActionPerformed
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         cardLayout.show(mainPanel, "menuPanel");
     }//GEN-LAST:event_leaderboardBackActionPerformed
+
+    private void difficultyBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difficultyBack
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_difficultyBack
+
+    private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
+        questions = API.fetchQuestions("easy");
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "gamePanel"); 
+        GUIGameplay newGame = new GUIGameplay(questions);
+        newGame.askNextQuestion();
+    }//GEN-LAST:event_button9ActionPerformed
+
+    private void button10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button10ActionPerformed
+        questions = API.fetchQuestions("medium");
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "gamePanel");
+        GUIGameplay newGame = new GUIGameplay(questions);
+        newGame.askNextQuestion();
+    }//GEN-LAST:event_button10ActionPerformed
+
+    private void button11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button11ActionPerformed
+        questions = API.fetchQuestions("hard");
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "gamePanel");
+        GUIGameplay newGame = new GUIGameplay(questions);
+        newGame.askNextQuestion();
+    }//GEN-LAST:event_button11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,17 +605,35 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Question1;
+    public static javax.swing.JButton answer1;
+    public static javax.swing.JButton answer2;
+    public static javax.swing.JButton answer3;
+    public static javax.swing.JButton answer4;
+    private javax.swing.JPanel answersPanel;
     private javax.swing.JButton button1;
+    private javax.swing.JButton button10;
+    private javax.swing.JButton button11;
     private javax.swing.JButton button2;
     private javax.swing.JButton button3;
     private javax.swing.JButton button4;
+    private javax.swing.JButton button9;
     private javax.swing.JPanel buttonsPanel;
+    private javax.swing.JButton difficultyBack;
+    private javax.swing.JPanel difficultyHeader;
+    private javax.swing.JPanel difficultyOptions;
+    private javax.swing.JPanel difficultyPanel;
+    private javax.swing.JPanel gameHeaderPanel;
+    private javax.swing.JPanel gamePanel;
     private javax.swing.JButton howToBack;
+    private javax.swing.JButton howToBack1;
     private javax.swing.JPanel howToHeaderPanel;
     private javax.swing.JPanel howToPanel;
     private javax.swing.JLabel howToPlayTitle;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton leaderboardBack;
@@ -351,6 +643,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel menuTitle;
+    public static javax.swing.JLabel questionNumber;
+    public static javax.swing.JTextArea questionText;
     private javax.swing.JPanel textPanel;
     // End of variables declaration//GEN-END:variables
 }

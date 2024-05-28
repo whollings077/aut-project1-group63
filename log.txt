@@ -1,0 +1,6 @@
+Failed to load millionaires data: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused: connect.
+
+Failed to load near millionaires data: java.net.ConnectException : Error connecting to server localhost on port 1,527 with message Connection refused: connect.
+
+Displaying Leaderboards
+
