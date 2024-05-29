@@ -5,6 +5,7 @@
 package QuizProgram;
 
 import static QuizProgram.CLI.lifelineCount;
+import static QuizProgram.GUILifeline.fiftyFiftyUsed;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,15 +25,19 @@ import javax.swing.Timer;
 public class GUIGameplay {
 
     int winnings = 0;
-    int currentQuestionNumber = 0;
-    boolean fiftyFiftyUsed = false;
-    boolean skipUsed = false;
-    static boolean questionAnswered = false;
+    private static int currentQuestionNumber = 0;
     static List<Question> questions;
-    Color darkGreen = new Color(0, 100, 0); //Custom green colour
+    public static Color darkGreen = new Color(0, 100, 0); //Custom green colour
+    private static List<String> currentOptions = new ArrayList<>();
+    private static String currentCorrectAnswer;
+    private static Question currentQuestion;
+    private static JButton[] answerButtons = {
+        MainFrame.answer1, MainFrame.answer2, MainFrame.answer3, MainFrame.answer4
+    };
 
     //Hashmap where Key = Question Number and Value = Prize Money
-    Map<Integer, Integer> questionPrizes = Map.ofEntries(
+    static Map<Integer, Integer> questionPrizes = Map.ofEntries(
+            Map.entry(0, 0),
             Map.entry(1, 1000),
             Map.entry(2, 2500),
             Map.entry(3, 5000),
@@ -49,11 +54,16 @@ public class GUIGameplay {
         this.questions = questions;
     }
 
-    public void askNextQuestion() {
+    public static void askNextQuestion() {
         if (currentQuestionNumber < questions.size()) {
             Question question = questions.get(currentQuestionNumber);
+            currentQuestion = question;
+            currentCorrectAnswer = question.getCorrect_Answer();
+            
             List<String> options = new ArrayList<>(question.getIncorrect_Answers());
-            options.add(question.getCorrect_Answer()); //Adds the correct answer to the list of  answer options for a question
+            currentOptions = options;
+            options.add(question.getCorrect_Answer()); //Adds the correct answer to the list of answer options for a question
+            
             Collections.shuffle(options); //This shuffles the collection of questions so that the correct one is in a random location
 
             //debug
@@ -62,8 +72,14 @@ public class GUIGameplay {
 
             //Display the question and the shuffled list of options to the user
             MainFrame.questionNumber.setText("Question " + (currentQuestionNumber + 1) + ":");
+            MainFrame.winningsLabel.setText("Current Winnings: " + questionPrizes.get(currentQuestionNumber));
             MainFrame.questionText.setText(question.getQuestion());
-
+            
+            for (JButton button : answerButtons) {
+                button.setEnabled(true);
+                button.setVisible(true);
+            }
+            
             //Remove two buttons if the question is True/False
             if (options.size() == 2) {
                 MainFrame.answer3.setVisible(false);
@@ -75,9 +91,6 @@ public class GUIGameplay {
                 MainFrame.answer2.setText(options.get(1));
                 MainFrame.answer3.setText(options.get(2));
                 MainFrame.answer4.setText(options.get(3));
-
-                MainFrame.answer3.setVisible(true);
-                MainFrame.answer4.setVisible(true);
             }
 
             //Removing previous listeners, or else variables will break.
@@ -116,24 +129,36 @@ public class GUIGameplay {
                     checkAnswer(selectedAnswer, question, options);
                 }
             };
-
-            MainFrame.answer1.addActionListener(answerListener);
-            MainFrame.answer2.addActionListener(answerListener);
-            MainFrame.answer3.addActionListener(answerListener);
-            MainFrame.answer4.addActionListener(answerListener);
+            
+            for (JButton button : answerButtons) {
+                button.addActionListener(answerListener);
+            }
         }
     }
 
-    public void checkAnswer(int answerNumber, Question question, List<String> options) {
+    public static void checkAnswer(int answerNumber, Question question, List<String> options) {
+        //If user gets answer correct
         if (options.get(answerNumber - 1).equals(question.getCorrect_Answer())) {
             MainFrame.questionText.setForeground(darkGreen);
             MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.BOLD, 32f));
-            MainFrame.questionText.setText("                  Correct!");
-        } else {
+            MainFrame.questionText.setText("                 Correct!");
+            MainFrame.answer1.setEnabled(false);
+            MainFrame.answer2.setEnabled(false);
+            MainFrame.answer3.setEnabled(false);
+            MainFrame.answer4.setEnabled(false);
+        }
+        
+        //If user gets answer wrong
+        else {
             MainFrame.questionText.setForeground(Color.RED);
             MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.BOLD));
             MainFrame.questionText.setText("Incorrect! The correct answer was " + question.getCorrect_Answer());
+            MainFrame.answer1.setEnabled(false);
+            MainFrame.answer2.setEnabled(false);
+            MainFrame.answer3.setEnabled(false);
+            MainFrame.answer4.setEnabled(false);
         }
+        
         Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,10 +173,28 @@ public class GUIGameplay {
     }
 
     //Loops through all listeners on a button and removes them.
-    private void removeActionListeners(JButton button) {
+    private static void removeActionListeners(JButton button) {
         ActionListener[] listeners = button.getActionListeners();
         for (ActionListener listener : listeners) {
             button.removeActionListener(listener);
         }
     }
+
+    public static List<String> getCurrentOptions() {
+        return currentOptions;
+    }
+
+    public static String getCurrentCorrectAnswer() {
+        return currentCorrectAnswer;
+    }
+
+    public static JButton[] getAnswerButtons() {
+        return answerButtons;
+    }
+
+    public static Question getCurrentQuestion() {
+        return currentQuestion;
+    }
+    
+    
 }

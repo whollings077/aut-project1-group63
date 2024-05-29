@@ -56,14 +56,17 @@ public class MainFrame extends javax.swing.JFrame {
         gamePanel = new javax.swing.JPanel();
         gameHeaderPanel = new javax.swing.JPanel();
         questionNumber = new javax.swing.JLabel();
+        winningsLabel = new javax.swing.JLabel();
         howToBack1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         questionText = new javax.swing.JTextArea();
+        skipButton = new javax.swing.JButton();
+        fiftyFiftyButton = new javax.swing.JButton();
         answersPanel = new javax.swing.JPanel();
         answer1 = new javax.swing.JButton();
         answer2 = new javax.swing.JButton();
-        answer3 = new javax.swing.JButton();
         answer4 = new javax.swing.JButton();
+        answer3 = new javax.swing.JButton();
         howToPanel = new javax.swing.JPanel();
         howToHeaderPanel = new javax.swing.JPanel();
         howToPlayTitle = new javax.swing.JLabel();
@@ -78,15 +81,16 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Who Wants To Be A Millionaire");
         setBackground(new java.awt.Color(255, 204, 255));
-        setPreferredSize(new java.awt.Dimension(860, 640));
+        setPreferredSize(new java.awt.Dimension(970, 690));
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(255, 204, 255));
         mainPanel.setName(""); // NOI18N
-        mainPanel.setPreferredSize(new java.awt.Dimension(860, 640));
+        mainPanel.setPreferredSize(new java.awt.Dimension(970, 690));
         mainPanel.setLayout(new java.awt.CardLayout());
 
         menuPanel.setBackground(new java.awt.Color(255, 204, 255));
+        menuPanel.setPreferredSize(new java.awt.Dimension(970, 690));
         menuPanel.setLayout(new java.awt.BorderLayout());
 
         textPanel.setOpaque(false);
@@ -101,16 +105,16 @@ public class MainFrame extends javax.swing.JFrame {
         textPanelLayout.setHorizontalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(textPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(52, 52, 52)
                 .addComponent(menuTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         textPanelLayout.setVerticalGroup(
             textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(textPanelLayout.createSequentialGroup()
-                .addGap(113, 113, 113)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, textPanelLayout.createSequentialGroup()
+                .addContainerGap(148, Short.MAX_VALUE)
                 .addComponent(menuTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(133, 133, 133))
         );
 
         menuPanel.add(textPanel, java.awt.BorderLayout.CENTER);
@@ -164,6 +168,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(menuPanel, "menuPanel");
 
         difficultyPanel.setBackground(new java.awt.Color(255, 204, 255));
+        difficultyPanel.setPreferredSize(new java.awt.Dimension(970, 690));
         difficultyPanel.setLayout(new java.awt.BorderLayout());
 
         difficultyHeader.setOpaque(false);
@@ -176,7 +181,7 @@ public class MainFrame extends javax.swing.JFrame {
         difficultyBack.setBackground(new java.awt.Color(255, 153, 153));
         difficultyBack.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
         difficultyBack.setText("Back");
-        difficultyBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        difficultyBack.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         difficultyBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 difficultyBack(evt);
@@ -188,22 +193,23 @@ public class MainFrame extends javax.swing.JFrame {
         difficultyHeaderLayout.setHorizontalGroup(
             difficultyHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(difficultyHeaderLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(difficultyHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Question1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(difficultyHeaderLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(difficultyBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(difficultyBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(difficultyHeaderLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(Question1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         difficultyHeaderLayout.setVerticalGroup(
             difficultyHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(difficultyHeaderLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(difficultyBack, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(40, 40, 40)
                 .addComponent(Question1)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         difficultyPanel.add(difficultyHeader, java.awt.BorderLayout.CENTER);
@@ -247,6 +253,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(difficultyPanel, "difficultyPanel");
 
         gamePanel.setBackground(new java.awt.Color(255, 204, 255));
+        gamePanel.setPreferredSize(new java.awt.Dimension(970, 690));
         gamePanel.setLayout(new java.awt.BorderLayout());
 
         gameHeaderPanel.setOpaque(false);
@@ -255,17 +262,20 @@ public class MainFrame extends javax.swing.JFrame {
         questionNumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         questionNumber.setAlignmentX(0.5F);
 
+        winningsLabel.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        winningsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        winningsLabel.setAlignmentX(0.5F);
+
         howToBack1.setBackground(new java.awt.Color(255, 153, 153));
         howToBack1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
         howToBack1.setText("Back");
-        howToBack1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        howToBack1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         howToBack1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gameBack(evt);
             }
         });
 
-        jScrollPane2.setBackground(null);
         jScrollPane2.setBorder(null);
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -277,7 +287,6 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane2.setBorder(null);
 
         questionText.setEditable(false);
-        questionText.setBackground(null);
         questionText.setColumns(20);
         questionText.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         questionText.setRows(5);
@@ -290,34 +299,25 @@ public class MainFrame extends javax.swing.JFrame {
         questionText.setBorder(null);
         jScrollPane2.setViewportView(questionText);
 
-        javax.swing.GroupLayout gameHeaderPanelLayout = new javax.swing.GroupLayout(gameHeaderPanel);
-        gameHeaderPanel.setLayout(gameHeaderPanelLayout);
-        gameHeaderPanelLayout.setHorizontalGroup(
-            gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(gameHeaderPanelLayout.createSequentialGroup()
-                        .addComponent(howToBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(questionNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 216, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        gameHeaderPanelLayout.setVerticalGroup(
-            gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(howToBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(questionNumber))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        skipButton.setBackground(new java.awt.Color(204, 255, 204));
+        skipButton.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        skipButton.setText("Skip");
+        skipButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        skipButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skipButton(evt);
+            }
+        });
 
-        gamePanel.add(gameHeaderPanel, java.awt.BorderLayout.CENTER);
+        fiftyFiftyButton.setBackground(new java.awt.Color(204, 255, 204));
+        fiftyFiftyButton.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        fiftyFiftyButton.setText("50:50");
+        fiftyFiftyButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fiftyFiftyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fiftyFiftyButton(evt);
+            }
+        });
 
         answersPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
         answersPanel.setOpaque(false);
@@ -341,15 +341,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         answersPanel.add(answer2);
 
-        answer3.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
-        answer3.setPreferredSize(new java.awt.Dimension(250, 150));
-        answer3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                answer3howToPlayButtonPressed(evt);
-            }
-        });
-        answersPanel.add(answer3);
-
         answer4.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
         answer4.setPreferredSize(new java.awt.Dimension(250, 150));
         answer4.addActionListener(new java.awt.event.ActionListener() {
@@ -359,13 +350,69 @@ public class MainFrame extends javax.swing.JFrame {
         });
         answersPanel.add(answer4);
 
-        gamePanel.add(answersPanel, java.awt.BorderLayout.SOUTH);
+        answer3.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer3.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer3howToPlayButtonPressed(evt);
+            }
+        });
+        answersPanel.add(answer3);
+
+        javax.swing.GroupLayout gameHeaderPanelLayout = new javax.swing.GroupLayout(gameHeaderPanel);
+        gameHeaderPanel.setLayout(gameHeaderPanelLayout);
+        gameHeaderPanelLayout.setHorizontalGroup(
+            gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(howToBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(questionNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
+                .addComponent(fiftyFiftyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(skipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
+                .addGap(282, 282, 282)
+                .addComponent(winningsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameHeaderPanelLayout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameHeaderPanelLayout.createSequentialGroup()
+                        .addComponent(answersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameHeaderPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78))))
+        );
+        gameHeaderPanelLayout.setVerticalGroup(
+            gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameHeaderPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(questionNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(gameHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(howToBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fiftyFiftyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(skipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(winningsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(answersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
+        );
+
+        gamePanel.add(gameHeaderPanel, java.awt.BorderLayout.PAGE_START);
 
         mainPanel.add(gamePanel, "gamePanel");
 
         howToPanel.setBackground(new java.awt.Color(255, 204, 255));
         howToPanel.setName(""); // NOI18N
-        howToPanel.setPreferredSize(new java.awt.Dimension(860, 640));
+        howToPanel.setPreferredSize(new java.awt.Dimension(970, 690));
         howToPanel.setLayout(new java.awt.BorderLayout());
 
         howToHeaderPanel.setBackground(new java.awt.Color(255, 204, 255));
@@ -378,7 +425,7 @@ public class MainFrame extends javax.swing.JFrame {
         howToBack.setBackground(new java.awt.Color(255, 153, 153));
         howToBack.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
         howToBack.setText("Back");
-        howToBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        howToBack.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         howToBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 howToBack(evt);
@@ -392,9 +439,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(howToHeaderPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(howToBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(155, 155, 155)
+                .addGap(220, 220, 220)
                 .addComponent(howToPlayTitle)
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
         howToHeaderPanelLayout.setVerticalGroup(
             howToHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,7 +466,7 @@ public class MainFrame extends javax.swing.JFrame {
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 23)); // NOI18N
         jTextArea2.setRows(5);
-        jTextArea2.setText(" In this game you will be asked 10 random questions at a difficulty of your choosing! \n You will be presented with 4 possible answers but only ONE will be correct.\n\n You have two lifelines which can each help you out with a question if you're stuck. \n 50:50 will get rid of two incorrect answers (Only works on questions with 4 answers)\n Skip will skip the current question.\n\n To answer questions, click on the button with your answer.\n To activate your lifelines, click on the buttons in the top right.\n\n Each question you answer will earn you more money and if you get all 10\n correct, you win $1,000,000! Get one wrong and it's back to zero!");
+        jTextArea2.setText("           In this game you will be asked 10 random questions at a difficulty of your choosing! \n                  You will be presented with 4 possible answers but only ONE will be correct.\n\n             You have two lifelines which can each help you out with a question if you're stuck. \n            50:50 will get rid of two incorrect answers (Only works on questions with 4 answers)\n                                                   Skip will skip the current question.\n\n                                 To answer questions, click on the button with your answer.\n                              To activate your lifelines, click on the buttons in the top right.\n\n                   Each question you answer will earn you more money and if you get all 10\n                         correct, you win $1,000,000! Get one wrong and it's back to zero!");
         jTextArea2.setBorder(null);
         jTextArea2.setDisabledTextColor(null);
         jTextArea2.setOpaque(false);
@@ -431,7 +478,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         leaderboardPanel.setBackground(new java.awt.Color(255, 204, 255));
         leaderboardPanel.setName(""); // NOI18N
-        leaderboardPanel.setPreferredSize(new java.awt.Dimension(860, 640));
+        leaderboardPanel.setPreferredSize(new java.awt.Dimension(970, 690));
         leaderboardPanel.setLayout(new java.awt.BorderLayout());
 
         leaderboardHeaderPanel.setBackground(new java.awt.Color(255, 204, 255));
@@ -444,7 +491,7 @@ public class MainFrame extends javax.swing.JFrame {
         leaderboardBack.setBackground(new java.awt.Color(255, 153, 153));
         leaderboardBack.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
         leaderboardBack.setText("Back");
-        leaderboardBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        leaderboardBack.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         leaderboardBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 leaderboardBackActionPerformed(evt);
@@ -458,9 +505,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(leaderboardHeaderPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(leaderboardBack, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(166, 166, 166)
+                .addGap(211, 211, 211)
                 .addComponent(leaderboardTitle)
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(366, Short.MAX_VALUE))
         );
         leaderboardHeaderPanelLayout.setVerticalGroup(
             leaderboardHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,6 +618,15 @@ public class MainFrame extends javax.swing.JFrame {
         newGame.askNextQuestion();
     }//GEN-LAST:event_button11ActionPerformed
 
+    private void skipButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipButton
+        skipButton.setBackground(new Color(255, 153, 153));
+        GUILifeline.skip(GUIGameplay.getCurrentQuestion(), GUIGameplay.getCurrentOptions());
+    }//GEN-LAST:event_skipButton
+
+    private void fiftyFiftyButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyFiftyButton
+        GUILifeline.fiftyFifty(GUIGameplay.getCurrentOptions(), GUIGameplay.getCurrentCorrectAnswer(), GUIGameplay.getAnswerButtons());
+    }//GEN-LAST:event_fiftyFiftyButton
+
     /**
      * @param args the command line arguments
      */
@@ -626,6 +682,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel difficultyHeader;
     private javax.swing.JPanel difficultyOptions;
     private javax.swing.JPanel difficultyPanel;
+    public static javax.swing.JButton fiftyFiftyButton;
     private javax.swing.JPanel gameHeaderPanel;
     private javax.swing.JPanel gamePanel;
     private javax.swing.JButton howToBack;
@@ -645,6 +702,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel menuTitle;
     public static javax.swing.JLabel questionNumber;
     public static javax.swing.JTextArea questionText;
+    public static javax.swing.JButton skipButton;
     private javax.swing.JPanel textPanel;
+    public static javax.swing.JLabel winningsLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,3 +4,13 @@ Failed to load near millionaires data: java.net.ConnectException : Error connect
 
 Displaying Leaderboards
 
+User selected medium difficulty
+
+User selected easy difficulty
+
+User selected easy difficulty
+
+
+User selected How to Play
+User selected easy difficulty
+
