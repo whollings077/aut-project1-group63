@@ -12,19 +12,32 @@ import javax.swing.BorderFactory;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author GGPC
  */
 public class MainFrame extends javax.swing.JFrame {
+
     public List<Question> questions;
-    
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        populateMillionairesTable(); // calls method below
+    }
+
+    private void populateMillionairesTable() {
+        DefaultTableModel model = (DefaultTableModel) GUILeaderboard.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        List<Object[]> millionairesData = Leaderboard.getMillionairesDataForGUI(); // i thought this was quite an elegant way to do this but idk
+        for (Object[] row : millionairesData) {
+            model.addRow(row);
+        }
     }
 
     /**
@@ -77,6 +90,8 @@ public class MainFrame extends javax.swing.JFrame {
         leaderboardHeaderPanel = new javax.swing.JPanel();
         leaderboardTitle = new javax.swing.JLabel();
         leaderboardBack = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        GUILeaderboard = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Who Wants To Be A Millionaire");
@@ -521,6 +536,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         leaderboardPanel.add(leaderboardHeaderPanel, java.awt.BorderLayout.NORTH);
 
+        GUILeaderboard.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Winnings", "Lifeline Count", "Difficulty"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(GUILeaderboard);
+        GUILeaderboard.getAccessibleContext().setAccessibleName("");
+
+        leaderboardPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
         mainPanel.add(leaderboardPanel, "leaderboardPanel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -597,7 +633,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
         questions = API.fetchQuestions("easy");
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-        cardLayout.show(mainPanel, "gamePanel"); 
+        cardLayout.show(mainPanel, "gamePanel");
         GUIGameplay newGame = new GUIGameplay(questions);
         newGame.askNextQuestion();
     }//GEN-LAST:event_button9ActionPerformed
@@ -661,9 +697,10 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable GUILeaderboard;
     private javax.swing.JLabel Question1;
     public static javax.swing.JButton answer1;
     public static javax.swing.JButton answer2;
@@ -690,6 +727,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel howToHeaderPanel;
     private javax.swing.JPanel howToPanel;
     private javax.swing.JLabel howToPlayTitle;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea2;

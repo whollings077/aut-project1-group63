@@ -207,4 +207,21 @@ public class Leaderboard { //this code is really scuffed because i wrote it to w
 
         return nearMillionaires;
     }
+    
+    public static List<Object[]> getMillionairesDataForGUI() { // Gets millionaires from the database for the gui to use
+        List<Object[]> data = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT Name, LifelineCount, Difficulty FROM Millionaires")) {
+
+            while (rs.next()) {
+                Object[] row = {rs.getString("Name"), rs.getInt("LifelineCount"), rs.getString("Difficulty")};
+                data.add(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 }
