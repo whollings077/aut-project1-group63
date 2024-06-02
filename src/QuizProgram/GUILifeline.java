@@ -18,8 +18,8 @@ import javax.swing.JButton;
  */
 class GUILifeline {
 
-    static boolean fiftyFiftyUsed = false;
-    static boolean skipUsed = false;
+    private static boolean fiftyFiftyUsed = false;
+    private static boolean skipUsed = false;
 
     public static void fiftyFifty(List<String> options, String correctAnswer, JButton... buttons) {
         //Check if player has already used lifeline or if question is true/false
@@ -55,12 +55,20 @@ class GUILifeline {
         String correctAnswer = question.getCorrect_Answer();
         
         for (int i = 0; i < options.size(); i++) {
-        if (options.get(i).equals(correctAnswer)) {
-            GUIGameplay.checkAnswer(i + 1, question, options);
-            break;
-        }
-    }
-        
+            if (options.get(i).equals(correctAnswer)) {
+                GUIGameplay.checkAnswer(i + 1, question, options);
+                break;
+            }
+        }  
     }
 
+    public static void resetLifelines() {
+        GUILifeline.fiftyFiftyUsed = false;
+        GUILifeline.skipUsed = false;
+        
+        skipButton.setBackground(new Color(204, 255, 204));
+        fiftyFiftyButton.setBackground(new Color(204, 255, 204));
+    }
+
+    
 }

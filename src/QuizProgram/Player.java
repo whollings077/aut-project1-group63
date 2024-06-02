@@ -9,7 +9,7 @@ package QuizProgram;
  * @author Matthew Warn
  */
 
-class Player {
+public class Player {
     private String name;
     private int winnings;
     private int lifelineCount;

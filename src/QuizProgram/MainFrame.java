@@ -4,6 +4,9 @@
  */
 package QuizProgram;
 
+import QuizProgram.API;
+import QuizProgram.Leaderboard;
+import QuizProgram.Question;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.Iterator;
@@ -92,11 +95,26 @@ public class MainFrame extends javax.swing.JFrame {
         leaderboardBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         GUILeaderboard = new javax.swing.JTable();
+        endPanel = new javax.swing.JPanel();
+        endHeader = new javax.swing.JPanel();
+        endTitle = new javax.swing.JLabel();
+        endSubtitle = new javax.swing.JLabel();
+        endButtons = new javax.swing.JPanel();
+        button12 = new javax.swing.JButton();
+        button13 = new javax.swing.JButton();
+        button14 = new javax.swing.JButton();
+        savePanel = new javax.swing.JPanel();
+        saveHeader = new javax.swing.JPanel();
+        saveTitle = new javax.swing.JLabel();
+        saveSubtitle = new javax.swing.JLabel();
+        saveButtons = new javax.swing.JPanel();
+        button15 = new javax.swing.JButton();
+        button16 = new javax.swing.JButton();
+        button17 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Who Wants To Be A Millionaire");
         setBackground(new java.awt.Color(255, 204, 255));
-        setPreferredSize(new java.awt.Dimension(970, 690));
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(255, 204, 255));
@@ -559,6 +577,160 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(leaderboardPanel, "leaderboardPanel");
 
+        endPanel.setBackground(new java.awt.Color(255, 204, 255));
+        endPanel.setPreferredSize(new java.awt.Dimension(970, 690));
+        endPanel.setLayout(new java.awt.BorderLayout());
+
+        endHeader.setOpaque(false);
+
+        endTitle.setFont(new java.awt.Font("Century Schoolbook", 1, 56)); // NOI18N
+        endTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        endTitle.setAlignmentX(0.5F);
+
+        endSubtitle.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+
+        javax.swing.GroupLayout endHeaderLayout = new javax.swing.GroupLayout(endHeader);
+        endHeader.setLayout(endHeaderLayout);
+        endHeaderLayout.setHorizontalGroup(
+            endHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(endHeaderLayout.createSequentialGroup()
+                .addGroup(endHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(endHeaderLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(endTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(endHeaderLayout.createSequentialGroup()
+                        .addGap(328, 328, 328)
+                        .addComponent(endSubtitle)))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+        endHeaderLayout.setVerticalGroup(
+            endHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(endHeaderLayout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(endTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(endSubtitle)
+                .addContainerGap(195, Short.MAX_VALUE))
+        );
+
+        endPanel.add(endHeader, java.awt.BorderLayout.CENTER);
+
+        endButtons.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        endButtons.setOpaque(false);
+        endButtons.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
+
+        button12.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button12.setText("Save Score to Leaderboard");
+        button12.setPreferredSize(new java.awt.Dimension(250, 150));
+        button12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button12ActionPerformed(evt);
+            }
+        });
+        endButtons.add(button12);
+
+        button13.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button13.setText("Try Again");
+        button13.setPreferredSize(new java.awt.Dimension(250, 150));
+        button13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button13ActionPerformed(evt);
+            }
+        });
+        endButtons.add(button13);
+
+        button14.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button14.setText("Back to Menu");
+        button14.setPreferredSize(new java.awt.Dimension(250, 150));
+        button14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button14ActionPerformed(evt);
+            }
+        });
+        endButtons.add(button14);
+
+        endPanel.add(endButtons, java.awt.BorderLayout.SOUTH);
+
+        mainPanel.add(endPanel, "endPanel");
+
+        savePanel.setBackground(new java.awt.Color(255, 204, 255));
+        savePanel.setPreferredSize(new java.awt.Dimension(970, 690));
+        savePanel.setLayout(new java.awt.BorderLayout());
+
+        saveHeader.setOpaque(false);
+
+        saveTitle.setFont(new java.awt.Font("Century Schoolbook", 1, 56)); // NOI18N
+        saveTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        saveTitle.setText("Enter your name:");
+        saveTitle.setAlignmentX(0.5F);
+
+        saveSubtitle.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        saveSubtitle.setText("or whatever");
+
+        javax.swing.GroupLayout saveHeaderLayout = new javax.swing.GroupLayout(saveHeader);
+        saveHeader.setLayout(saveHeaderLayout);
+        saveHeaderLayout.setHorizontalGroup(
+            saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saveHeaderLayout.createSequentialGroup()
+                .addGroup(saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(saveHeaderLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(saveTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(saveHeaderLayout.createSequentialGroup()
+                        .addGap(420, 420, 420)
+                        .addComponent(saveSubtitle)))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+        saveHeaderLayout.setVerticalGroup(
+            saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saveHeaderLayout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(saveTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saveSubtitle)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
+        savePanel.add(saveHeader, java.awt.BorderLayout.CENTER);
+
+        saveButtons.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        saveButtons.setOpaque(false);
+        saveButtons.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
+
+        button15.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button15.setText("Save Score to Leaderboard");
+        button15.setPreferredSize(new java.awt.Dimension(250, 150));
+        button15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button15ActionPerformed(evt);
+            }
+        });
+        saveButtons.add(button15);
+
+        button16.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button16.setText("Try Again");
+        button16.setPreferredSize(new java.awt.Dimension(250, 150));
+        button16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button16ActionPerformed(evt);
+            }
+        });
+        saveButtons.add(button16);
+
+        button17.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        button17.setText("Back to Menu");
+        button17.setPreferredSize(new java.awt.Dimension(250, 150));
+        button17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button17ActionPerformed(evt);
+            }
+        });
+        saveButtons.add(button17);
+
+        savePanel.add(saveButtons, java.awt.BorderLayout.SOUTH);
+
+        mainPanel.add(savePanel, "savePanel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -663,6 +835,33 @@ public class MainFrame extends javax.swing.JFrame {
         GUILifeline.fiftyFifty(GUIGameplay.getCurrentOptions(), GUIGameplay.getCurrentCorrectAnswer(), GUIGameplay.getAnswerButtons());
     }//GEN-LAST:event_fiftyFiftyButton
 
+    private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "savePanel");
+    }//GEN-LAST:event_button12ActionPerformed
+
+    private void button13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button13ActionPerformed
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "difficultyPanel");
+    }//GEN-LAST:event_button13ActionPerformed
+
+    private void button14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button14ActionPerformed
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_button14ActionPerformed
+
+    private void button15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button15ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button15ActionPerformed
+
+    private void button16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button16ActionPerformed
+
+    private void button17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button17ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -710,6 +909,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton button1;
     private javax.swing.JButton button10;
     private javax.swing.JButton button11;
+    private javax.swing.JButton button12;
+    private javax.swing.JButton button13;
+    private javax.swing.JButton button14;
+    private javax.swing.JButton button15;
+    private javax.swing.JButton button16;
+    private javax.swing.JButton button17;
     private javax.swing.JButton button2;
     private javax.swing.JButton button3;
     private javax.swing.JButton button4;
@@ -719,6 +924,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel difficultyHeader;
     private javax.swing.JPanel difficultyOptions;
     private javax.swing.JPanel difficultyPanel;
+    private javax.swing.JPanel endButtons;
+    private javax.swing.JPanel endHeader;
+    private javax.swing.JPanel endPanel;
+    public static javax.swing.JLabel endSubtitle;
+    public static javax.swing.JLabel endTitle;
     public static javax.swing.JButton fiftyFiftyButton;
     private javax.swing.JPanel gameHeaderPanel;
     private javax.swing.JPanel gamePanel;
@@ -735,11 +945,16 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel leaderboardHeaderPanel;
     private javax.swing.JPanel leaderboardPanel;
     private javax.swing.JLabel leaderboardTitle;
-    private javax.swing.JPanel mainPanel;
+    public static javax.swing.JPanel mainPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel menuTitle;
     public static javax.swing.JLabel questionNumber;
     public static javax.swing.JTextArea questionText;
+    private javax.swing.JPanel saveButtons;
+    private javax.swing.JPanel saveHeader;
+    private javax.swing.JPanel savePanel;
+    public static javax.swing.JLabel saveSubtitle;
+    private javax.swing.JLabel saveTitle;
     public static javax.swing.JButton skipButton;
     private javax.swing.JPanel textPanel;
     public static javax.swing.JLabel winningsLabel;

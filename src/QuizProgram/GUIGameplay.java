@@ -4,8 +4,7 @@
  */
 package QuizProgram;
 
-import static QuizProgram.CLI.lifelineCount;
-import static QuizProgram.GUILifeline.fiftyFiftyUsed;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.Timer;
 
@@ -25,7 +23,7 @@ import javax.swing.Timer;
 public class GUIGameplay {
 
     int winnings = 0;
-    private static int currentQuestionNumber = 0;
+    private static int currentQuestionNumber;
     static List<Question> questions;
     public static Color darkGreen = new Color(0, 100, 0); //Custom green colour
     private static List<String> currentOptions = new ArrayList<>();
@@ -52,6 +50,13 @@ public class GUIGameplay {
 
     public GUIGameplay(List<Question> questions) {
         this.questions = questions;
+        this.currentQuestionNumber = 0;
+        
+        GUILifeline.resetLifelines();
+        
+        MainFrame.questionText.setForeground(Color.BLACK);
+        MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.PLAIN, 24f));
+        
     }
 
     public static void askNextQuestion() {
@@ -69,6 +74,7 @@ public class GUIGameplay {
             //debug
             System.out.println(question.getQuestion());
             System.out.println(options);
+            System.out.println("\n" + question.getCorrect_Answer());
 
             //Display the question and the shuffled list of options to the user
             MainFrame.questionNumber.setText("Question " + (currentQuestionNumber + 1) + ":");
@@ -76,9 +82,10 @@ public class GUIGameplay {
             MainFrame.questionText.setText(question.getQuestion());
             
             for (JButton button : answerButtons) {
-                button.setEnabled(true);
                 button.setVisible(true);
             }
+            
+            enableAllButtons();
             
             //Remove two buttons if the question is True/False
             if (options.size() == 2) {
@@ -137,15 +144,31 @@ public class GUIGameplay {
     }
 
     public static void checkAnswer(int answerNumber, Question question, List<String> options) {
+        
         //If user gets answer correct
         if (options.get(answerNumber - 1).equals(question.getCorrect_Answer())) {
             MainFrame.questionText.setForeground(darkGreen);
             MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.BOLD, 32f));
             MainFrame.questionText.setText("                 Correct!");
-            MainFrame.answer1.setEnabled(false);
-            MainFrame.answer2.setEnabled(false);
-            MainFrame.answer3.setEnabled(false);
-            MainFrame.answer4.setEnabled(false);
+            disableAllButtons();   
+            
+            //Pausing for 2 seconds before asking next question
+            Timer timer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(currentQuestionNumber == 9){
+                    win();
+                }
+                else{
+                    currentQuestionNumber++;
+                    MainFrame.questionText.setForeground(Color.BLACK);
+                    MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.PLAIN, 24f));
+                    askNextQuestion();
+                }
+            }
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
         
         //If user gets answer wrong
@@ -153,25 +176,52 @@ public class GUIGameplay {
             MainFrame.questionText.setForeground(Color.RED);
             MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.BOLD));
             MainFrame.questionText.setText("Incorrect! The correct answer was " + question.getCorrect_Answer());
-            MainFrame.answer1.setEnabled(false);
-            MainFrame.answer2.setEnabled(false);
-            MainFrame.answer3.setEnabled(false);
-            MainFrame.answer4.setEnabled(false);
-        }
-        
-        Timer timer = new Timer(2000, new ActionListener() {
+            disableAllButtons();
+            
+            Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                currentQuestionNumber++;
-                MainFrame.questionText.setForeground(Color.BLACK);
-                MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.PLAIN, 24f));
-                askNextQuestion();
+                lose();
             }
-        });
-        timer.setRepeats(false);
-        timer.start();
+            });
+            timer.setRepeats(false);
+            timer.start();
+            
+        }
+    }
+    
+    public static void win(){
+        CardLayout cardLayout = (CardLayout) MainFrame.mainPanel.getLayout();
+        cardLayout.show(MainFrame.mainPanel, "endPanel");
+        MainFrame.endTitle.setText("You Win!");
+        MainFrame.endSubtitle.setText("Your final winnings are: $1,000,000!");
+    }
+    
+    public static void lose(){
+        CardLayout cardLayout = (CardLayout) MainFrame.mainPanel.getLayout();
+        cardLayout.show(MainFrame.mainPanel, "endPanel");
+        MainFrame.endTitle.setText("You Lose!");
+        MainFrame.endSubtitle.setText("Your final winnings are: $" + questionPrizes.get(currentQuestionNumber));
     }
 
+    public static void disableAllButtons(){
+        MainFrame.answer1.setEnabled(false);
+        MainFrame.answer2.setEnabled(false);
+        MainFrame.answer3.setEnabled(false);
+        MainFrame.answer4.setEnabled(false);
+        MainFrame.fiftyFiftyButton.setEnabled(false);
+        MainFrame.skipButton.setEnabled(false);
+    }
+    
+    public static void enableAllButtons(){
+        MainFrame.answer1.setEnabled(true);
+        MainFrame.answer2.setEnabled(true);
+        MainFrame.answer3.setEnabled(true);
+        MainFrame.answer4.setEnabled(true);
+        MainFrame.fiftyFiftyButton.setEnabled(true);
+        MainFrame.skipButton.setEnabled(true);
+    }
+    
     //Loops through all listeners on a button and removes them.
     private static void removeActionListeners(JButton button) {
         ActionListener[] listeners = button.getActionListeners();
