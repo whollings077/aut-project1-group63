@@ -14,3 +14,41 @@ User selected easy difficulty
 User selected How to Play
 User selected easy difficulty
 
+Displaying Leaderboards
+
+User exited to main menu
+
+User selected easy difficulty
+
+Successfully added william with winnings of 0 to NearMillionaires
+
+Displaying Leaderboards
+
+User exited to main menu
+
+User selected easy difficulty
+
+User selected easy difficulty
+
+
+User selected How to Play
+User selected easy difficulty
+
+
+User selected How to Play
+User selected easy difficulty
+
+User selected easy difficulty
+
+User selected easy difficulty
+
+Leaderboard Choice Yes
+
+Successfully added WilliamMillionaretest to Millionaires
+
+Displaying Leaderboards
+
+User exited to main menu
+
+Displaying Leaderboards
+

@@ -15,39 +15,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  *
  * @author william
  */
 public class Leaderboard { //this code is really scuffed because i wrote it to work without needing to change any of the other classes
 
-    private static final String DB_URL = "jdbc:derby://localhost:1527/QuizDB;create=true";
-    private static final String USER = "app";
-    private static final String PASS = "app";
-
-    static {
-        // setup the tables if they dont exist
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             Statement stmt = conn.createStatement()) {
-            String createMillionairesTable = "CREATE TABLE Millionaires ("
-                    + "ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                    + "Name VARCHAR(255),"
-                    + "LifelineCount INT,"
-                    + "Difficulty VARCHAR(255))";
-
-            String createNearMillionairesTable = "CREATE TABLE NearMillionaires ("
-                    + "ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                    + "Winnings INT,"
-                    + "Name VARCHAR(255),"
-                    + "LifelineCount INT,"
-                    + "Difficulty VARCHAR(255))";
-
-            stmt.executeUpdate(createMillionairesTable);
-            stmt.executeUpdate(createNearMillionairesTable);
-        } catch (SQLException e) {
-            // exceptions like table already existing
-        }
-    }
+    private static final DatabaseManager dbManager = new DatabaseManager();
 
     public static void leaderboardPrompt(int winnings) {
         Logger leaderboardPromptLog = new Logger();
@@ -82,36 +57,18 @@ public class Leaderboard { //this code is really scuffed because i wrote it to w
         }
     }
 
-    public static void addToLeaderboard(int winnings) {
+    public static void addToLeaderboard(int winnings) { //now uses database manager class, this code is for the cli version of the game
         Logger addToLeaderboardlog = new Logger();
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nEnter your name:");
         String playerName = scanner.nextLine();
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            if (winnings == 1000000) {
-                String sql = "INSERT INTO Millionaires (Name, LifelineCount, Difficulty) VALUES (?, ?, ?)";
-                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.setString(1, playerName);
-                    pstmt.setInt(2, CLI.lifelineCount);
-                    pstmt.setString(3, CLI.leaderboardDiff);
-                    pstmt.executeUpdate();
-                    addToLeaderboardlog.write("Successfully added " + playerName + " to Millionaires\n");
-                }
-            } else {
-                String sql = "INSERT INTO NearMillionaires (Winnings, Name, LifelineCount, Difficulty) VALUES (?, ?, ?, ?)";
-                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.setInt(1, winnings);
-                    pstmt.setString(2, playerName);
-                    pstmt.setInt(3, CLI.lifelineCount);
-                    pstmt.setString(4, CLI.leaderboardDiff);
-                    pstmt.executeUpdate();
-                    addToLeaderboardlog.write("Successfully added " + playerName + " with winnings of " + winnings + " to NearMillionaires\n");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Failed to update leaderboard. " + e.getMessage());
-            addToLeaderboardlog.write("Failed to update leaderboard for " + playerName + " with exception: " + e.getMessage() + "\n");
+        if (winnings == 1000000) {
+            dbManager.addMillionaire(playerName, CLI.lifelineCount, CLI.leaderboardDiff);
+            addToLeaderboardlog.write("Successfully added " + playerName + " to Millionaires\n");
+        } else {
+            dbManager.addNearMillionaire(winnings, playerName, CLI.lifelineCount, CLI.leaderboardDiff);
+            addToLeaderboardlog.write("Successfully added " + playerName + " with winnings of " + winnings + " to NearMillionaires\n");
         }
 
         System.out.println("\n");
@@ -122,20 +79,22 @@ public class Leaderboard { //this code is really scuffed because i wrote it to w
         Logger displayLeaderBoardlog = new Logger();
         Scanner scanner = new Scanner(System.in);
 
-        List<Player> millionaires = loadMillionaires();
-        List<Player> nearMillionaires = loadNearMillionaires();
+        DatabaseManager dbManager = new DatabaseManager();
 
-        Collections.sort(nearMillionaires, Comparator.comparing(Player::getWinnings).reversed());
+        List<Object[]> millionaires = dbManager.getMillionaires();
+        List<Object[]> nearMillionaires = dbManager.getNearMillionaires();
+
+        nearMillionaires.sort(Comparator.comparing(o -> (Integer) o[0], Comparator.reverseOrder()));
         displayLeaderBoardlog.write("Displaying Leaderboards\n");
 
         System.out.println("\n~~~~~~~LIST OF MILLIONAIRES~~~~~~~");
-        for (Player player : millionaires) {
-            System.out.println("-~=" + player.getName() + "=~- | Difficulty: " + player.getDifficulty() + " | Lifelines Used: " + player.getLifelineCount());
+        for (Object[] player : millionaires) {
+            System.out.println("-~=" + player[0] + "=~- | Difficulty: " + player[2] + " | Lifelines Used: " + player[1]);
         }
 
         System.out.println("\nList of Near Millionaires:");
-        for (Player player : nearMillionaires) {
-            System.out.println(player.getName() + " | Winnings: $" + player.getWinnings() + " | Difficulty: " + player.getDifficulty() + " | Lifelines Used: " + player.getLifelineCount());
+        for (Object[] player : nearMillionaires) {
+            System.out.println(player[1] + " | Winnings: $" + player[0] + " | Difficulty: " + player[3] + " | Lifelines Used: " + player[2]);
         }
 
         System.out.println("\nEnter 0 to exit to main menu.");
@@ -148,7 +107,7 @@ public class Leaderboard { //this code is really scuffed because i wrote it to w
                     case 0:
                         displayLeaderBoardlog.write("User exited to main menu\n");
                         Main.runGame();
-                        break;
+                        return;
                     default:
                         displayLeaderBoardlog.write("Invalid number input for exiting leaderboard display\n");
                         System.out.println("Please input a valid number.");
@@ -159,69 +118,6 @@ public class Leaderboard { //this code is really scuffed because i wrote it to w
                 scanner.next();
             }
         }
-    }
-
-    private static List<Player> loadMillionaires() {
-        Logger loadMillionaireslog = new Logger();
-        List<Player> millionaires = new ArrayList<>();
-
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Millionaires")) {
-
-            while (rs.next()) {
-                String name = rs.getString("Name");
-                int lifelineCount = rs.getInt("LifelineCount");
-                String difficulty = rs.getString("Difficulty");
-                millionaires.add(new Player(name, 1000000, lifelineCount, difficulty));
-            }
-            loadMillionaireslog.write("Successfully loaded millionaires data\n");
-        } catch (SQLException e) {
-            System.err.println("Failed to load millionaires data: " + e.getMessage());
-            loadMillionaireslog.write("Failed to load millionaires data: " + e.getMessage() + "\n");
-        }
-
-        return millionaires;
-    }
-
-    private static List<Player> loadNearMillionaires() {
-        Logger loadNearMillionaireslog = new Logger();
-        List<Player> nearMillionaires = new ArrayList<>();
-
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM NearMillionaires")) {
-
-            while (rs.next()) {
-                int winnings = rs.getInt("Winnings");
-                String name = rs.getString("Name");
-                int lifelineCount = rs.getInt("LifelineCount");
-                String difficulty = rs.getString("Difficulty");
-                nearMillionaires.add(new Player(name, winnings, lifelineCount, difficulty));
-            }
-            loadNearMillionaireslog.write("Successfully loaded near millionaires data\n");
-        } catch (SQLException e) {
-            System.err.println("Failed to load near millionaires data: " + e.getMessage());
-            loadNearMillionaireslog.write("Failed to load near millionaires data: " + e.getMessage() + "\n");
-        }
-
-        return nearMillionaires;
-    }
-    
-    public static List<Object[]> getMillionairesDataForGUI() { // Gets millionaires from the database for the gui to use
-        List<Object[]> data = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT Name, LifelineCount, Difficulty FROM Millionaires")) {
-
-            while (rs.next()) {
-                Object[] row = {rs.getString("Name"), rs.getInt("LifelineCount"), rs.getString("Difficulty")};
-                data.add(row);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return data;
     }
 
 }

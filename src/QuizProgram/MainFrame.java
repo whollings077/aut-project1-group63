@@ -25,11 +25,13 @@ public class MainFrame extends javax.swing.JFrame {
     
     private boolean endless;
     private List<Question> questions;
+    private DatabaseManager dbManager;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+        dbManager = new DatabaseManager();
         initComponents();
         populateMillionairesTable(); // calls method below
     }
@@ -38,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) GUILeaderboard.getModel();
         model.setRowCount(0); // Clear existing data
 
-        List<Object[]> millionairesData = Leaderboard.getMillionairesDataForGUI(); // i thought this was quite an elegant way to do this but idk
+        List<Object[]> millionairesData = dbManager.getMillionaires();
         for (Object[] row : millionairesData) {
             model.addRow(row);
         }
@@ -120,7 +122,6 @@ public class MainFrame extends javax.swing.JFrame {
         savePanel = new javax.swing.JPanel();
         saveHeader = new javax.swing.JPanel();
         saveTitle = new javax.swing.JLabel();
-        saveSubtitle = new javax.swing.JLabel();
         saveButtons = new javax.swing.JPanel();
         button15 = new javax.swing.JButton();
         button16 = new javax.swing.JButton();
@@ -826,21 +827,13 @@ public class MainFrame extends javax.swing.JFrame {
         saveTitle.setText("Enter your name:");
         saveTitle.setAlignmentX(0.5F);
 
-        saveSubtitle.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        saveSubtitle.setText("or whatever");
-
         javax.swing.GroupLayout saveHeaderLayout = new javax.swing.GroupLayout(saveHeader);
         saveHeader.setLayout(saveHeaderLayout);
         saveHeaderLayout.setHorizontalGroup(
             saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(saveHeaderLayout.createSequentialGroup()
-                .addGroup(saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(saveHeaderLayout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(saveTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(saveHeaderLayout.createSequentialGroup()
-                        .addGap(420, 420, 420)
-                        .addComponent(saveSubtitle)))
+                .addGap(54, 54, 54)
+                .addComponent(saveTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         saveHeaderLayout.setVerticalGroup(
@@ -848,9 +841,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(saveHeaderLayout.createSequentialGroup()
                 .addGap(119, 119, 119)
                 .addComponent(saveTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(saveSubtitle)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         savePanel.add(saveHeader, java.awt.BorderLayout.CENTER);
@@ -1184,7 +1175,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel saveButtons;
     private javax.swing.JPanel saveHeader;
     private javax.swing.JPanel savePanel;
-    public static javax.swing.JLabel saveSubtitle;
     public static javax.swing.JLabel saveTitle;
     public static javax.swing.JButton skipButton;
     public static javax.swing.JButton skipButton1;
