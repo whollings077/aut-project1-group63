@@ -26,6 +26,7 @@ public class EndlessMode {
     public static void play(String difficulty) { // starts endless mode
         while (true) {
             Question question = fetchUniqueQuestion(difficulty);
+            
             if (question == null) {
                 System.out.println("No more unique questions available. Restarting...");
                 askedQuestions.clear();

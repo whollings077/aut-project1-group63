@@ -48,6 +48,7 @@ public class GUIGameplay {
             Map.entry(10, 1000000)
     );
 
+    //Constructor resets variables for when a user goes back to menu and then replays
     public GUIGameplay(List<Question> questions) {
         this.questions = questions;
         this.currentQuestionNumber = 0;
@@ -59,6 +60,7 @@ public class GUIGameplay {
         
     }
 
+    //Will ask one question to the player
     public static void askNextQuestion() {
         if (currentQuestionNumber < questions.size()) {
             Question question = questions.get(currentQuestionNumber);
@@ -123,16 +125,6 @@ public class GUIGameplay {
                         selectedAnswer = 4;
                     }
 
-                    //Create a timer to disable button and prevent multiple clicks
-                    Timer timer = new Timer(200, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            clickedButton.setEnabled(true);
-                        }
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
-
                     checkAnswer(selectedAnswer, question, options);
                 }
             };
@@ -150,16 +142,18 @@ public class GUIGameplay {
             MainFrame.questionText.setForeground(darkGreen);
             MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.BOLD, 32f));
             MainFrame.questionText.setText("                 Correct!");
-            disableAllButtons();   
+            disableAllButtons(); //To stop the user from clicking multiple buttons
             
             //Pausing for 2 seconds before asking next question
             Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //If the user has answered all 10 questions
                 if(currentQuestionNumber == 9){
                     win();
                 }
                 else{
+                    //Repeat
                     currentQuestionNumber++;
                     MainFrame.questionText.setForeground(Color.BLACK);
                     MainFrame.questionText.setFont(MainFrame.questionText.getFont().deriveFont(Font.PLAIN, 24f));
@@ -190,6 +184,7 @@ public class GUIGameplay {
         }
     }
     
+    //Both win() and lose() show the endPanel and the users final winnings
     public static void win(){
         CardLayout cardLayout = (CardLayout) MainFrame.mainPanel.getLayout();
         cardLayout.show(MainFrame.mainPanel, "endPanel");
@@ -230,6 +225,7 @@ public class GUIGameplay {
         }
     }
 
+    //Various getters
     public static List<String> getCurrentOptions() {
         return currentOptions;
     }

@@ -22,8 +22,9 @@ import javax.swing.table.DefaultTableModel;
  * @author GGPC
  */
 public class MainFrame extends javax.swing.JFrame {
-
-    public List<Question> questions;
+    
+    private boolean endless;
+    private List<Question> questions;
 
     /**
      * Creates new form MainFrame
@@ -83,6 +84,19 @@ public class MainFrame extends javax.swing.JFrame {
         answer2 = new javax.swing.JButton();
         answer4 = new javax.swing.JButton();
         answer3 = new javax.swing.JButton();
+        endlessPanel = new javax.swing.JPanel();
+        gameHeaderPanel1 = new javax.swing.JPanel();
+        endlessQuestionNo = new javax.swing.JLabel();
+        howToBack2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        endlessQuestionText = new javax.swing.JTextArea();
+        skipButton1 = new javax.swing.JButton();
+        fiftyFiftyButton1 = new javax.swing.JButton();
+        answersPanel1 = new javax.swing.JPanel();
+        answer5 = new javax.swing.JButton();
+        answer6 = new javax.swing.JButton();
+        answer7 = new javax.swing.JButton();
+        answer8 = new javax.swing.JButton();
         howToPanel = new javax.swing.JPanel();
         howToHeaderPanel = new javax.swing.JPanel();
         howToPlayTitle = new javax.swing.JLabel();
@@ -443,6 +457,154 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(gamePanel, "gamePanel");
 
+        endlessPanel.setBackground(new java.awt.Color(255, 204, 255));
+        endlessPanel.setPreferredSize(new java.awt.Dimension(970, 690));
+        endlessPanel.setLayout(new java.awt.BorderLayout());
+
+        gameHeaderPanel1.setOpaque(false);
+
+        endlessQuestionNo.setFont(new java.awt.Font("Century Schoolbook", 1, 32)); // NOI18N
+        endlessQuestionNo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        endlessQuestionNo.setAlignmentX(0.5F);
+
+        howToBack2.setBackground(new java.awt.Color(255, 153, 153));
+        howToBack2.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        howToBack2.setText("Back");
+        howToBack2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        howToBack2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                howToBack2gameBack(evt);
+            }
+        });
+
+        jScrollPane4.setBorder(null);
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane4.setViewportBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(255, 204, 255)));
+        jScrollPane4.setOpaque(false);
+        jScrollPane4.setWheelScrollingEnabled(false);
+        jScrollPane4.setOpaque(false);
+        jScrollPane4.getViewport().setOpaque(false);
+        jScrollPane4.setBorder(null);
+
+        endlessQuestionText.setEditable(false);
+        endlessQuestionText.setColumns(20);
+        endlessQuestionText.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        endlessQuestionText.setRows(5);
+        endlessQuestionText.setBorder(null);
+        endlessQuestionText.setOpaque(false);
+        endlessQuestionText.setOpaque(false);
+        endlessQuestionText.setBackground(new Color(0, 0, 0, 0)); 
+        endlessQuestionText.setLineWrap(true);
+        endlessQuestionText.setWrapStyleWord(true);
+        endlessQuestionText.setBorder(null);
+        jScrollPane4.setViewportView(endlessQuestionText);
+
+        skipButton1.setBackground(new java.awt.Color(204, 255, 204));
+        skipButton1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        skipButton1.setText("Skip");
+        skipButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        skipButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skipButton1(evt);
+            }
+        });
+
+        fiftyFiftyButton1.setBackground(new java.awt.Color(204, 255, 204));
+        fiftyFiftyButton1.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        fiftyFiftyButton1.setText("50:50");
+        fiftyFiftyButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fiftyFiftyButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fiftyFiftyButton1(evt);
+            }
+        });
+
+        answersPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        answersPanel1.setOpaque(false);
+        answersPanel1.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
+
+        answer5.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer5.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer5(evt);
+            }
+        });
+        answersPanel1.add(answer5);
+
+        answer6.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer6.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer6ActionPerformed(evt);
+            }
+        });
+        answersPanel1.add(answer6);
+
+        answer7.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer7.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer7leaderboardButtonPressed(evt);
+            }
+        });
+        answersPanel1.add(answer7);
+
+        answer8.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
+        answer8.setPreferredSize(new java.awt.Dimension(250, 150));
+        answer8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answer8howToPlayButtonPressed(evt);
+            }
+        });
+        answersPanel1.add(answer8);
+
+        javax.swing.GroupLayout gameHeaderPanel1Layout = new javax.swing.GroupLayout(gameHeaderPanel1);
+        gameHeaderPanel1.setLayout(gameHeaderPanel1Layout);
+        gameHeaderPanel1Layout.setHorizontalGroup(
+            gameHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameHeaderPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(howToBack2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(endlessQuestionNo, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
+                .addComponent(fiftyFiftyButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(skipButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameHeaderPanel1Layout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(gameHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameHeaderPanel1Layout.createSequentialGroup()
+                        .addComponent(answersPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameHeaderPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78))))
+        );
+        gameHeaderPanel1Layout.setVerticalGroup(
+            gameHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameHeaderPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(gameHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(endlessQuestionNo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(gameHeaderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(howToBack2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fiftyFiftyButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(skipButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(answersPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
+        );
+
+        endlessPanel.add(gameHeaderPanel1, java.awt.BorderLayout.PAGE_START);
+
+        mainPanel.add(endlessPanel, "endlessPanel");
+
         howToPanel.setBackground(new java.awt.Color(255, 204, 255));
         howToPanel.setName(""); // NOI18N
         howToPanel.setPreferredSize(new java.awt.Dimension(970, 690));
@@ -748,6 +910,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        endless = false;
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         cardLayout.show(mainPanel, "difficultyPanel");
     }//GEN-LAST:event_button1ActionPerformed
@@ -763,7 +926,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_leaderboardButtonPressed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
+        endless = true;
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "difficultyPanel");
     }//GEN-LAST:event_button2ActionPerformed
 
     private void howToBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_howToBack
@@ -803,32 +968,56 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_difficultyBack
 
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
-        questions = API.fetchQuestions("easy");
-        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-        cardLayout.show(mainPanel, "gamePanel");
-        GUIGameplay newGame = new GUIGameplay(questions);
-        newGame.askNextQuestion();
+        if(endless == false){
+            questions = API.fetchQuestions("easy");
+            CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+            cardLayout.show(mainPanel, "gamePanel");
+            GUIGameplay newGame = new GUIGameplay(questions);
+            newGame.askNextQuestion();
+        }
+        else{
+            CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+            cardLayout.show(mainPanel, "endlessPanel");
+            GUIEndless newEndless = new GUIEndless("easy");
+            GUIEndless.play();
+        }
     }//GEN-LAST:event_button9ActionPerformed
 
     private void button10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button10ActionPerformed
-        questions = API.fetchQuestions("medium");
-        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-        cardLayout.show(mainPanel, "gamePanel");
-        GUIGameplay newGame = new GUIGameplay(questions);
-        newGame.askNextQuestion();
+        if(endless == false){
+            questions = API.fetchQuestions("medium");
+            CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+            cardLayout.show(mainPanel, "gamePanel");
+            GUIGameplay newGame = new GUIGameplay(questions);
+            newGame.askNextQuestion();
+        }
+        else{
+            CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+            cardLayout.show(mainPanel, "endlessPanel");
+            GUIEndless newEndless = new GUIEndless("medium");
+            GUIEndless.play();
+        }
     }//GEN-LAST:event_button10ActionPerformed
 
     private void button11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button11ActionPerformed
-        questions = API.fetchQuestions("hard");
-        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-        cardLayout.show(mainPanel, "gamePanel");
-        GUIGameplay newGame = new GUIGameplay(questions);
-        newGame.askNextQuestion();
+        if(endless == false){
+            questions = API.fetchQuestions("hard");
+            CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+            cardLayout.show(mainPanel, "gamePanel");
+            GUIGameplay newGame = new GUIGameplay(questions);
+            newGame.askNextQuestion();
+        }
+        else{
+            CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+            cardLayout.show(mainPanel, "endlessPanel");
+            GUIEndless newEndless = new GUIEndless("hard");
+            GUIEndless.play();
+        }
     }//GEN-LAST:event_button11ActionPerformed
 
     private void skipButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipButton
         skipButton.setBackground(new Color(255, 153, 153));
-        GUILifeline.skip(GUIGameplay.getCurrentQuestion(), GUIGameplay.getCurrentOptions());
+        GUILifeline.skip(GUIGameplay.getCurrentQuestion(), GUIGameplay.getCurrentOptions(), false);
     }//GEN-LAST:event_skipButton
 
     private void fiftyFiftyButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyFiftyButton
@@ -861,6 +1050,36 @@ public class MainFrame extends javax.swing.JFrame {
     private void button17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_button17ActionPerformed
+
+    private void howToBack2gameBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_howToBack2gameBack
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_howToBack2gameBack
+
+    private void skipButton1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipButton1
+        skipButton.setBackground(new Color(255, 153, 153));
+        GUILifeline.skip(GUIEndless.getCurrentQuestion(), GUIEndless.getCurrentOptions(), true);
+    }//GEN-LAST:event_skipButton1
+
+    private void fiftyFiftyButton1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyFiftyButton1
+        GUILifeline.fiftyFifty(GUIEndless.getCurrentOptions(), GUIEndless.getCurrentCorrectAnswer(), GUIEndless.getAnswerButtons());
+    }//GEN-LAST:event_fiftyFiftyButton1
+
+    private void answer5(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer5
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer5
+
+    private void answer6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer6ActionPerformed
+
+    private void answer7leaderboardButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer7leaderboardButtonPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer7leaderboardButtonPressed
+
+    private void answer8howToPlayButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer8howToPlayButtonPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_answer8howToPlayButtonPressed
 
     /**
      * @param args the command line arguments
@@ -905,7 +1124,12 @@ public class MainFrame extends javax.swing.JFrame {
     public static javax.swing.JButton answer2;
     public static javax.swing.JButton answer3;
     public static javax.swing.JButton answer4;
+    public static javax.swing.JButton answer5;
+    public static javax.swing.JButton answer6;
+    public static javax.swing.JButton answer7;
+    public static javax.swing.JButton answer8;
     private javax.swing.JPanel answersPanel;
+    private javax.swing.JPanel answersPanel1;
     private javax.swing.JButton button1;
     private javax.swing.JButton button10;
     private javax.swing.JButton button11;
@@ -929,17 +1153,24 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel endPanel;
     public static javax.swing.JLabel endSubtitle;
     public static javax.swing.JLabel endTitle;
+    private javax.swing.JPanel endlessPanel;
+    public static javax.swing.JLabel endlessQuestionNo;
+    public static javax.swing.JTextArea endlessQuestionText;
     public static javax.swing.JButton fiftyFiftyButton;
+    public static javax.swing.JButton fiftyFiftyButton1;
     private javax.swing.JPanel gameHeaderPanel;
+    private javax.swing.JPanel gameHeaderPanel1;
     private javax.swing.JPanel gamePanel;
     private javax.swing.JButton howToBack;
     private javax.swing.JButton howToBack1;
+    private javax.swing.JButton howToBack2;
     private javax.swing.JPanel howToHeaderPanel;
     private javax.swing.JPanel howToPanel;
     private javax.swing.JLabel howToPlayTitle;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton leaderboardBack;
     private javax.swing.JPanel leaderboardHeaderPanel;
@@ -954,8 +1185,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel saveHeader;
     private javax.swing.JPanel savePanel;
     public static javax.swing.JLabel saveSubtitle;
-    private javax.swing.JLabel saveTitle;
+    public static javax.swing.JLabel saveTitle;
     public static javax.swing.JButton skipButton;
+    public static javax.swing.JButton skipButton1;
     private javax.swing.JPanel textPanel;
     public static javax.swing.JLabel winningsLabel;
     // End of variables declaration//GEN-END:variables

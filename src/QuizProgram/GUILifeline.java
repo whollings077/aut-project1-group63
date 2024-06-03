@@ -5,7 +5,9 @@
 package QuizProgram;
 
 import static QuizProgram.MainFrame.fiftyFiftyButton;
+import static QuizProgram.MainFrame.fiftyFiftyButton1;
 import static QuizProgram.MainFrame.skipButton;
+import static QuizProgram.MainFrame.skipButton1;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -29,8 +31,10 @@ class GUILifeline {
 
         //Change color of button and change boolean
         fiftyFiftyButton.setBackground(new Color(255, 153, 153));
+        fiftyFiftyButton1.setBackground(new Color(255, 153, 153));
         fiftyFiftyUsed = true;
         
+        //Finding incorrect answers
         List<Integer> incorrectAnswers = new ArrayList<>();
         for (int i = 0; i < options.size(); i++) {
             if (!options.get(i).equals(correctAnswer)) {
@@ -43,25 +47,33 @@ class GUILifeline {
         buttons[incorrectAnswers.get(1)].setVisible(false);
     }
 
-    public static void skip(Question question, List<String> options) {
+    public static void skip(Question question, List<String> options, boolean endless) {
         //Check if player has already used lifeline
         if (skipUsed) {
             return;
         }
         
         skipButton.setBackground(new Color(255, 153, 153));
+        skipButton1.setBackground(new Color(255, 153, 153));
         skipUsed = true;
         
         String correctAnswer = question.getCorrect_Answer();
         
+        //Runs the checkAnswer method with the correct answer for the respective gamemode
         for (int i = 0; i < options.size(); i++) {
             if (options.get(i).equals(correctAnswer)) {
-                GUIGameplay.checkAnswer(i + 1, question, options);
+                if(endless == true){
+                    GUIEndless.checkAnswer(i + 1, question, options);
+                }
+                else{
+                    GUIGameplay.checkAnswer(i + 1, question, options);
+                }
                 break;
             }
         }  
     }
 
+    //Resets lifelines back to normal
     public static void resetLifelines() {
         GUILifeline.fiftyFiftyUsed = false;
         GUILifeline.skipUsed = false;
