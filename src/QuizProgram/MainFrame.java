@@ -22,13 +22,13 @@ import javax.swing.table.DefaultTableModel;
  * @author GGPC
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private boolean endless;
     private List<Question> questions;
     private DatabaseManager dbManager;
     public String difficulty = "";
-    public int winnings =0;
-    public int lifelinecount=0;
+    public int winnings = 0;
+    public int lifelinecount = 0;
 
     /**
      * Creates new form MainFrame
@@ -44,8 +44,24 @@ public class MainFrame extends javax.swing.JFrame {
         model.setRowCount(0); // Clear existing data
 
         List<Object[]> millionairesData = dbManager.getMillionaires();
+        List<Object[]> nearMillionairesData = dbManager.getNearMillionaires();
         for (Object[] row : millionairesData) {
-            model.addRow(row);
+            Object[] rowWithWinnings = new Object[row.length + 2];
+            rowWithWinnings[0] = row[0]; // Name
+            rowWithWinnings[1] = 1000000; // Winnings
+            rowWithWinnings[2] = row[1]; // LifelineCount
+            rowWithWinnings[3] = row[2]; // Difficulty
+            rowWithWinnings[4] = "Millionaire"; // Type
+            model.addRow(rowWithWinnings);
+        }
+        for (Object[] row : nearMillionairesData) {
+            Object[] rowWithLabel = new Object[5];
+            rowWithLabel[0] = row[1]; // Name
+            rowWithLabel[1] = row[0]; // Winnings
+            rowWithLabel[2] = row[2]; // Difficulty
+            rowWithLabel[3] = row[3]; // LifelineCount
+            rowWithLabel[4] = "Near Millionaire"; // Type
+            model.addRow(rowWithLabel);
         }
     }
 
@@ -965,49 +981,52 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_difficultyBack
 
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
-        if(endless == false){
+        if (endless == false) {
             questions = API.fetchQuestions("easy");
+            difficulty = "Easy";
             CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
             cardLayout.show(mainPanel, "gamePanel");
             GUIGameplay newGame = new GUIGameplay(questions);
             newGame.askNextQuestion();
-        }
-        else{
+        } else {
             CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
             cardLayout.show(mainPanel, "endlessPanel");
             GUIEndless newEndless = new GUIEndless("easy");
+            difficulty = "Easy";
             GUIEndless.play();
         }
     }//GEN-LAST:event_button9ActionPerformed
 
     private void button10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button10ActionPerformed
-        if(endless == false){
+        if (endless == false) {
             questions = API.fetchQuestions("medium");
             CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
             cardLayout.show(mainPanel, "gamePanel");
             GUIGameplay newGame = new GUIGameplay(questions);
+            difficulty = "Medium";
             newGame.askNextQuestion();
-        }
-        else{
+        } else {
             CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
             cardLayout.show(mainPanel, "endlessPanel");
             GUIEndless newEndless = new GUIEndless("medium");
+            difficulty = "Medium";
             GUIEndless.play();
         }
     }//GEN-LAST:event_button10ActionPerformed
 
     private void button11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button11ActionPerformed
-        if(endless == false){
+        if (endless == false) {
             questions = API.fetchQuestions("hard");
             CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
             cardLayout.show(mainPanel, "gamePanel");
             GUIGameplay newGame = new GUIGameplay(questions);
+            difficulty = "Hard";
             newGame.askNextQuestion();
-        }
-        else{
+        } else {
             CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
             cardLayout.show(mainPanel, "endlessPanel");
             GUIEndless newEndless = new GUIEndless("hard");
+            difficulty = "Hard";
             GUIEndless.play();
         }
     }//GEN-LAST:event_button11ActionPerformed
@@ -1040,13 +1059,12 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         int savedwinnings = GUIGameplay.getWinnings();
         String playerName = savePanelNameField.getText();
-        if (savedwinnings==1000000){
-          dbManager.addMillionaire(playerName, lifelinecount, difficulty);    
+        if (savedwinnings == 1000000) {
+            dbManager.addMillionaire(playerName, lifelinecount, difficulty);
         } else {
-          dbManager.addNearMillionaire(savedwinnings, playerName, lifelinecount, difficulty);
+            dbManager.addNearMillionaire(savedwinnings, playerName, lifelinecount, difficulty);
         }
-        
-        
+        populateMillionairesTable();
         //this should return to menu *hopefully*
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         cardLayout.show(mainPanel, "menuPanel");
