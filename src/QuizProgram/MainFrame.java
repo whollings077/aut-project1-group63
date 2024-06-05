@@ -9,6 +9,8 @@ import QuizProgram.Leaderboard;
 import QuizProgram.Question;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -16,6 +18,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.table.DefaultTableModel;
+import java.util.Comparator;
 
 /**
  *
@@ -52,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
             rowWithWinnings[2] = row[1]; // LifelineCount
             rowWithWinnings[3] = row[2]; // Difficulty
             rowWithWinnings[4] = "Millionaire"; // Type
-            model.addRow(rowWithWinnings);
+            millionairesData.set(millionairesData.indexOf(row), rowWithWinnings);
         }
         for (Object[] row : nearMillionairesData) {
             Object[] rowWithLabel = new Object[5];
@@ -61,7 +64,24 @@ public class MainFrame extends javax.swing.JFrame {
             rowWithLabel[2] = row[2]; // Difficulty
             rowWithLabel[3] = row[3]; // LifelineCount
             rowWithLabel[4] = "Near Millionaire"; // Type
-            model.addRow(rowWithLabel);
+            nearMillionairesData.set(nearMillionairesData.indexOf(row), rowWithLabel);
+        }
+        List<Object[]> allData = new ArrayList<>(millionairesData);
+        allData.addAll(nearMillionairesData);
+
+        // Sort the combined list by winnings
+        Collections.sort(allData, new Comparator<Object[]>() {
+            @Override
+            public int compare(Object[] o1, Object[] o2) {
+                Integer winnings1 = (Integer) o1[1];
+                Integer winnings2 = (Integer) o2[1];
+                return winnings2.compareTo(winnings1); // Sort in descending order
+            }
+        });
+
+        // Add sorted rows to the table model
+        for (Object[] row : allData) {
+            model.addRow(row);
         }
     }
 
@@ -1089,8 +1109,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_skipButton1
 
     private void fiftyFiftyButton1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyFiftyButton1
-        GUILifeline.fiftyFifty(GUIEndless.getCurrentOptions(), GUIEndless.getCurrentCorrectAnswer(), GUIEndless.getAnswerButtons());
         lifelinecount++;
+        GUILifeline.fiftyFifty(GUIEndless.getCurrentOptions(), GUIEndless.getCurrentCorrectAnswer(), GUIEndless.getAnswerButtons());
+        
     }//GEN-LAST:event_fiftyFiftyButton1
 
     private void answer5(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer5

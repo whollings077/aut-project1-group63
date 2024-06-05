@@ -22,7 +22,6 @@ import javax.swing.Timer;
  */
 public class GUIGameplay {
 
-    int winnings = 0;
     private static int currentQuestionNumber;
     static List<Question> questions;
     public static Color darkGreen = new Color(0, 100, 0); //Custom green colour
@@ -190,6 +189,7 @@ public class GUIGameplay {
         cardLayout.show(MainFrame.mainPanel, "endPanel");
         MainFrame.endTitle.setText("You Win!");
         MainFrame.endSubtitle.setText("Your final winnings are: $1,000,000!");
+        currentQuestionNumber++;
     }
     
     public static void lose(){
