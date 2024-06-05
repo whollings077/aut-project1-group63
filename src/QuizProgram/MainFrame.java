@@ -26,6 +26,9 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean endless;
     private List<Question> questions;
     private DatabaseManager dbManager;
+    public String difficulty = "";
+    public int winnings =0;
+    public int lifelinecount=0;
 
     /**
      * Creates new form MainFrame
@@ -122,10 +125,10 @@ public class MainFrame extends javax.swing.JFrame {
         savePanel = new javax.swing.JPanel();
         saveHeader = new javax.swing.JPanel();
         saveTitle = new javax.swing.JLabel();
+        savePanelNameField = new javax.swing.JTextField(20);
         saveButtons = new javax.swing.JPanel();
-        button15 = new javax.swing.JButton();
-        button16 = new javax.swing.JButton();
-        button17 = new javax.swing.JButton();
+        savePanelSaveButton = new javax.swing.JButton();
+        savePanelMenuButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Who Wants To Be A Millionaire");
@@ -827,13 +830,24 @@ public class MainFrame extends javax.swing.JFrame {
         saveTitle.setText("Enter your name:");
         saveTitle.setAlignmentX(0.5F);
 
+        savePanelNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePanelNameFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout saveHeaderLayout = new javax.swing.GroupLayout(saveHeader);
         saveHeader.setLayout(saveHeaderLayout);
         saveHeaderLayout.setHorizontalGroup(
             saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(saveHeaderLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(saveTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(saveHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(saveHeaderLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(saveTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(saveHeaderLayout.createSequentialGroup()
+                        .addGap(235, 235, 235)
+                        .addComponent(savePanelNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         saveHeaderLayout.setVerticalGroup(
@@ -841,7 +855,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(saveHeaderLayout.createSequentialGroup()
                 .addGap(119, 119, 119)
                 .addComponent(saveTitle)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(savePanelNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         savePanel.add(saveHeader, java.awt.BorderLayout.CENTER);
@@ -850,35 +866,25 @@ public class MainFrame extends javax.swing.JFrame {
         saveButtons.setOpaque(false);
         saveButtons.setLayout(new java.awt.GridLayout(2, 2, 30, 10));
 
-        button15.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        button15.setText("Save Score to Leaderboard");
-        button15.setPreferredSize(new java.awt.Dimension(250, 150));
-        button15.addActionListener(new java.awt.event.ActionListener() {
+        savePanelSaveButton.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        savePanelSaveButton.setText("Save Score to Leaderboard");
+        savePanelSaveButton.setPreferredSize(new java.awt.Dimension(250, 150));
+        savePanelSaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button15ActionPerformed(evt);
+                savePanelSaveButtonActionPerformed(evt);
             }
         });
-        saveButtons.add(button15);
+        saveButtons.add(savePanelSaveButton);
 
-        button16.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        button16.setText("Try Again");
-        button16.setPreferredSize(new java.awt.Dimension(250, 150));
-        button16.addActionListener(new java.awt.event.ActionListener() {
+        savePanelMenuButton.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
+        savePanelMenuButton.setText("Back to Menu");
+        savePanelMenuButton.setPreferredSize(new java.awt.Dimension(250, 150));
+        savePanelMenuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button16ActionPerformed(evt);
+                savePanelMenuButtonActionPerformed(evt);
             }
         });
-        saveButtons.add(button16);
-
-        button17.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 24)); // NOI18N
-        button17.setText("Back to Menu");
-        button17.setPreferredSize(new java.awt.Dimension(250, 150));
-        button17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button17ActionPerformed(evt);
-            }
-        });
-        saveButtons.add(button17);
+        saveButtons.add(savePanelMenuButton);
 
         savePanel.add(saveButtons, java.awt.BorderLayout.SOUTH);
 
@@ -1030,17 +1036,28 @@ public class MainFrame extends javax.swing.JFrame {
         cardLayout.show(mainPanel, "menuPanel");
     }//GEN-LAST:event_button14ActionPerformed
 
-    private void button15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button15ActionPerformed
+    private void savePanelSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePanelSaveButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_button15ActionPerformed
+        int savedwinnings = GUIGameplay.getWinnings();
+        String playerName = savePanelNameField.getText();
+        if (savedwinnings==1000000){
+          dbManager.addMillionaire(playerName, lifelinecount, difficulty);    
+        } else {
+          dbManager.addNearMillionaire(savedwinnings, playerName, lifelinecount, difficulty);
+        }
+        
+        
+        //this should return to menu *hopefully*
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_savePanelSaveButtonActionPerformed
 
-    private void button16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button16ActionPerformed
+    private void savePanelMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePanelMenuButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_button16ActionPerformed
-
-    private void button17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button17ActionPerformed
+        //this should return to menu *hopefully*
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, "menuPanel");
+    }//GEN-LAST:event_savePanelMenuButtonActionPerformed
 
     private void howToBack2gameBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_howToBack2gameBack
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
@@ -1050,10 +1067,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void skipButton1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipButton1
         skipButton.setBackground(new Color(255, 153, 153));
         GUILifeline.skip(GUIEndless.getCurrentQuestion(), GUIEndless.getCurrentOptions(), true);
+        lifelinecount++;
     }//GEN-LAST:event_skipButton1
 
     private void fiftyFiftyButton1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyFiftyButton1
         GUILifeline.fiftyFifty(GUIEndless.getCurrentOptions(), GUIEndless.getCurrentCorrectAnswer(), GUIEndless.getAnswerButtons());
+        lifelinecount++;
     }//GEN-LAST:event_fiftyFiftyButton1
 
     private void answer5(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer5
@@ -1071,6 +1090,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void answer8howToPlayButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer8howToPlayButtonPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_answer8howToPlayButtonPressed
+
+    private void savePanelNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePanelNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_savePanelNameFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1127,9 +1150,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton button12;
     private javax.swing.JButton button13;
     private javax.swing.JButton button14;
-    private javax.swing.JButton button15;
-    private javax.swing.JButton button16;
-    private javax.swing.JButton button17;
     private javax.swing.JButton button2;
     private javax.swing.JButton button3;
     private javax.swing.JButton button4;
@@ -1175,6 +1195,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel saveButtons;
     private javax.swing.JPanel saveHeader;
     private javax.swing.JPanel savePanel;
+    private javax.swing.JButton savePanelMenuButton;
+    private javax.swing.JTextField savePanelNameField;
+    private javax.swing.JButton savePanelSaveButton;
     public static javax.swing.JLabel saveTitle;
     public static javax.swing.JButton skipButton;
     public static javax.swing.JButton skipButton1;

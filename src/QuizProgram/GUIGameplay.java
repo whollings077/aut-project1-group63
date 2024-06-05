@@ -241,6 +241,9 @@ public class GUIGameplay {
     public static Question getCurrentQuestion() {
         return currentQuestion;
     }
+    public static int getWinnings(){
+        return questionPrizes.get(currentQuestionNumber);
+    }
     
     
 }
