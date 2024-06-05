@@ -1054,10 +1054,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void skipButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipButton
         skipButton.setBackground(new Color(255, 153, 153));
         GUILifeline.skip(GUIGameplay.getCurrentQuestion(), GUIGameplay.getCurrentOptions(), false);
+        lifelinecount++;
     }//GEN-LAST:event_skipButton
 
     private void fiftyFiftyButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyFiftyButton
         GUILifeline.fiftyFifty(GUIGameplay.getCurrentOptions(), GUIGameplay.getCurrentCorrectAnswer(), GUIGameplay.getAnswerButtons());
+        lifelinecount++;
     }//GEN-LAST:event_fiftyFiftyButton
 
     private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed

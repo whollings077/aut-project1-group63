@@ -31,6 +31,7 @@ public class GUIGameplay {
     private static JButton[] answerButtons = {
         MainFrame.answer1, MainFrame.answer2, MainFrame.answer3, MainFrame.answer4
     };
+    private static int lifelineCount;
 
     //Hashmap where Key = Question Number and Value = Prize Money
     static Map<Integer, Integer> questionPrizes = Map.ofEntries(
