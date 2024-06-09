@@ -8,6 +8,9 @@ package QuizProgram;
  *
  * @author wholl
  */
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,17 +19,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.derby.drda.NetworkServerControl;
 
 public class DatabaseManager {
     
 
-    private static final String DB_URL = "jdbc:derby://localhost:1527/QuizDB;create=true";
+    private static final String DB_URL = "jdbc:derby:QuizDB;create=true";
     private static final String USER = "app";
     private static final String PASS = "app";
-
+    private NetworkServerControl server;
+    
     public DatabaseManager() {
         setupTables();
     }
+   
 
     private void setupTables() {
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -124,5 +130,17 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return data;
+    }
+        
+    public void shutdownDerbyServer() {
+        if (server != null) {
+            try {
+                server.shutdown();
+                System.out.println("Derby server shut down.");
+            } catch (Exception e) {
+                System.err.println("Error shutting down Derby server: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private boolean endless;
     private List<Question> questions;
-    private DatabaseManager dbManager;
+    private static DatabaseManager dbManager;
     public String difficulty = "";
     public int winnings = 0;
     public int lifelinecount = 0;
@@ -1169,6 +1169,10 @@ public class MainFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
+        
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            dbManager.shutdownDerbyServer();
+        }));
     }
 
 
